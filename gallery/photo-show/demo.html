@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>相册图片展示</title>
+<style type="text/css">
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td{margin:0;padding:0}
+fieldset,img{border:0}
+:focus{outline:0}
+address,caption,cite,code,dfn,em,strong,th,var,optgroup{font-style:normal;font-weight:normal}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}
+abbr,acronym{border:0;font-variant:normal}
+input,button,textarea,select,optgroup,option{font-family:inherit;font-size:inherit;font-style:inherit;font-weight:inherit}
+code,kbd,samp,tt{font-size:100%}
+input,button,textarea,select{*font-size:100%}
+body{line-height:1.5}
+ol,ul{list-style:none}
+table{border-collapse:collapse;border-spacing:0}
+caption,th{text-align:left}sup,sub{font-size:100%;vertical-align:baseline}
+:link,:visited,ins{text-decoration:none}
+blockquote,q{quotes:none}
+blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}
+.clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+.clearfix{display:inline-block}
+*html .clearfix{height:1%}
+.clearfix{display:block}
+h1{display:none}
+a,a:link,a:visited{color:#333;text-decoration:none}
+a:hover{color:#f60;text-decoration:underline}
+body{font-size:12px;font-family:"Microsoft Yahei",Tahoma,"SimSun";color:#333;background:url(images/douyan_bg.jpg) center top 
+no-repeat #000;}
+/* slide */
+.slide{width:980px;height:653px;overflow:hidden;margin:0 auto;background:#000;border-top:1px solid #d21bd4}
+.slide_box{width:244px;height:653px;overflow:hidden;position:relative;float:left;border-right:1px solid #999;cursor:pointer;background-repeat:no-repeat}
+.slide_box.last{border-right-width:0}
+.slide .bg1 .navbox{width:244px}
+.slide #box_1{position:absolute;left:0;bottom:0}
+.slide #box_1 .navtitle{width:244px;height:45px;line-height:45px;overflow:hidden;font-size:20px;text-align:center}
+.slide #box_1 .navsumary{padding:10px;margin-bottom:3px;font-size:12px;line-height:26px}
+.slide #box_2{position:absolute;left:0;bottom:45px}.slide #box_2 .navtitle{width:244px;height:45px;line-height:45px;overflow:hidden;font-size:20px;text-align:center}
+.slide #box_2 .navsumary{padding:10px;margin-bottom:3px;font-size:12px;line-height:26px}
+.slide #box_3{position:absolute;left:0;bottom:90px}
+.slide #box_3 .navtitle{width:244px;height:45px;line-height:45px;overflow:hidden;font-size:20px;text-align:center}
+.slide #box_3 .navsumary{padding:10px;margin-bottom:3px;font-size:12px;line-height:26px}
+.slide #box_4{position:absolute;left:0;bottom:45px}
+.slide #box_4 .navtitle{width:244px;height:45px;line-height:45px;overflow:hidden;font-size:20px;text-align:center}
+.slide #box_4 .navsumary{padding:10px;margin-bottom:3px;font-size:12px;line-height:26px}
+.slide .navbox .navsumary{color:#fff;display:none;padding:10px}
+.navtitle img{display:none}
+.slide .navbox .navtitle a,.slide .navbox .navtitle a:link,.slide .navbox .navtitle a:visited{color:#fff;text-decoration:none}
+.slide .navbox .navtitle a:hover{color:#fff;text-decoration:underline}
+.slide .navtitle,.slide .navsumary{position:relative}
+.slide div.bg{position:absolute;width:100%;height:100%;z-index:1;left:0;top:0}
+.slide div.txt{position:relative;z-index:2}
+.slide div.bg{filter:alpha(opacity=60);opacity:.6}
+.slide #box_1 div.bg{background-color:#00ffea}
+.slide #box_2 div.bg{background-color:#9d9d9d}
+.slide #box_3 div.bg{background-color:#c020e8}
+.slide #box_4 div.bg{background-color:#e4ff00}
+.more{position:absolute;right:30px;top:500px;font-size:18px;color:#fff;}
+.more a:link,.more a:visited{color:#fff;}
+.bg1{background-image:url(images/b0a90f5b-4758-427b-93d0-a9410b5377c7.jpg)}
+.bg2{background-image:url(images/c5ed2bb6-fa7d-46d5-93d2-9b2732835436.jpg)}
+.bg3{background-image:url(images/baa0cf65-844c-4d66-ad53-11074c93c5d7.jpg)}
+.bg4{background-image:url(images/27de8606-039e-4033-8bf1-3c0a55d9e6bf.jpg)}
+</style>
+<!--[if lt IE 7]>
+<style type="text/css">
+.slide #box_1 .navsumary,.slide #box_2 .navsumary,.slide #box_3 .navsumary,.slide #box_4 .navsumary,.slide .navbox .navsumary{padding:0;width:244px;height:90px;overflow:hidden}
+.slide .navsumary div.txt{padding:10px;width:224px;}
+</style>
+<![endif]-->
+<script type="text/javascript" src="http://www.jsfoot.com/skin/js/jquery.js"></script>
+<script type="text/javascript">
+$(function(){
+	// 幻灯片图片滑动
+	$("html,body").animate({scrollTop:$("#slide").offset().top},800);
+	var a =0;
+	$("#slide>.slide_box").click(function(){
+		var a = $(this).find(".navbox>.navtitle a").attr("href");
+		window.open(a);
+		return !1 
+	}),
+	$("#slide>.slide_box").mouseover(function(){
+		var b =$(this).index();
+		if(b!= a){
+			$("#slide .navsumary").hide();
+			$(this).find(".navbox>.navsumary").show();
+			var c = "bg" + (b + 1);
+			b < a && ($.browser.msie?(
+				$(".slide_box").stop().animate({backgroundPositionX: "980px"}, 0).removeClass("bg1 bg2 bg3 bg4").addClass(c),
+				$("#box_1").parent().stop().animate({backgroundPositionX: "0"}, 100),
+				$("#box_2").parent().stop().animate({backgroundPositionX:"-245px"},200),
+				$("#box_3").parent().stop().animate({backgroundPositionX: "-490px"},300),
+				$("#box_4").parent().stop().animate({backgroundPositionX: "-735px"},400,
+				function(){
+					$(".slide_box,#slide").removeClass("bg1 bg2 bg3 bg4").addClass(c);
+				}
+			)):(
+				$(".slide_box").stop().animate({backgroundPosition:"980px 0"},0).removeClass("bg1 bg2 bg3 bg4").addClass(c),
+				$("#box_1").parent().stop().animate({backgroundPosition:"0 0"},100),
+				$("#box_2").parent().stop().animate({backgroundPosition:"-245px 0"},200),
+				$("#box_3").parent().stop().animate({backgroundPosition:"-490px 0"},300),
+				$("#box_4").parent().stop().animate({backgroundPosition: "-735px 0"},400,
+				function(){
+					$(".slide_box,#slide").removeClass("bg1 bg2 bg3 bg4").addClass(c)
+				}
+			)), a = b),b > a &&($.browser.msie?(
+				$(".slide_box").stop().animate({backgroundPositionX: "-980px" },0).removeClass("bg1 bg2 bg3 bg4").addClass(c),
+				$("#box_1").stop().parent().animate({backgroundPositionX:"0"},400,
+					function(){
+						$(".slide_box,#slide").removeClass("bg1 bg2 bg3 bg4").addClass(c)
+					}
+				),
+				$("#box_2").parent().stop().animate({ backgroundPositionX: "-245px" }, 300),
+				$("#box_3").parent().stop().animate({backgroundPositionX: "-490px"}, 200),
+				$("#box_4").parent().stop().animate({backgroundPositionX: "-735px"}, 100)):($(".slide_box").stop().animate({backgroundPosition:"-980px 0"},0).removeClass("bg1 bg2 bg3 bg4").addClass(c),
+				$("#box_1").stop().parent().animate({backgroundPosition:"0 0"},400,
+					function(){
+						$(".slide_box,#slide").removeClass("bg1 bg2 bg3 bg4").addClass(c)
+					}
+				),
+				$("#box_2").parent().stop().animate({backgroundPosition:"-245px 0"}, 300),
+				$("#box_3").parent().stop().animate({backgroundPosition:"-490px 0"},200),
+				$("#box_4").parent().stop().animate({backgroundPosition: "-735px 0"},100)
+			), a = b)
+		}
+	});
+		
+});
+</script>
+	
+</head>
+<body>
+
+	<div class="slide clearfix bg1" id="slide">
+		<div class="slide_box bg1" style="background-position:0 0;">
+			<div id="box_1" class="navbox">
+				<div class="navsumary" style="display:block">
+					<div class="bg"></div>
+					<div class="txt">MSN汽车为您精彩呈现斗艳第二十九期———《碧眼金发异域诱惑》。</div>
+				</div>
+				<div class="navtitle">
+					<div class="bg"></div>
+					<div class="txt"><a href="http://www.jsfoot.com/"><img src="images/b0a90f5b-4758-427b-93d0-a9410b5377c7.jpg" alt="碧眼金发异域诱惑" />碧眼金发异域诱惑</a></div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="slide_box bg1" style="background-position:-245px 0;">
+			<div id="box_2" class="navbox">
+				<div class="navsumary">
+					<div class="bg"></div>
+					<div class="txt">MSN汽车为您精彩呈现斗艳第二十八期———《性感女孩与狮共舞》。</div>
+				</div>
+				<div class="navtitle">
+					<div class="bg"></div>
+					<div class="txt"><a href="http://www.jsfoot.com/"><img src="images/c5ed2bb6-fa7d-46d5-93d2-9b2732835436.jpg" alt="性感女孩与狮共舞" />性感女孩与狮共舞</a></div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="slide_box bg1" style="background-position:-490px 0;">
+			<div id="box_3" class="navbox">
+				<div class="navsumary">
+					<div class="bg"></div>
+					<div class="txt">MSN汽车为您精彩呈现斗艳第二十四期———《气质美女的SUV情节》。</div>
+				</div>
+				<div class="navtitle">
+					<div class="bg"></div>
+					<div class="txt"><a href="http://www.jsfoot.com/"><img src="images/baa0cf65-844c-4d66-ad53-11074c93c5d7.jpg" alt="气质美女的SUV情结" />气质美女的SUV情结</a></div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="slide_box bg1 last" style="background-position:-735px 0;">
+			<div id="box_4" class="navbox">
+				<div class="navsumary">
+					<div class="bg"></div>
+					<div class="txt">MSN汽车为您精彩呈现斗艳第六期———《宝马美女阳光日记》。</div>
+				</div>
+				<div class="navtitle">
+					<div class="bg"></div>
+					<div class="txt"><a href="http://www.jsfoot.com/"><img src="images/27de8606-039e-4033-8bf1-3c0a55d9e6bf.jpg" alt="宝马女孩阳光日记" />宝马女孩阳光日记</a></div>
+				</div>
+			</div>
+		</div>
+	</div><!--slide end-->
+
+</body>
+</html>

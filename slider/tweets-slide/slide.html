@@ -1,0 +1,128 @@
+﻿<!doctype html>
+<html>
+<head>
+<title>JS实现新浪微博大厅滚动tweets-slide</title>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<style type="text/css">
+ul, li {margin:0; padding:0;list-style:none}
+body {
+ margin: 0;
+ height: 100%;
+ background: #333;
+}
+.wp {
+ position: relative;
+ width: 800px;
+ height: 400px;
+ overflow: hidden;
+ margin: 20px auto;
+ border: 4px solid #121212;
+ background: #fff;
+}
+.slider {
+ position: absolute;
+ width: 760px;
+ padding: 0 20px;
+ left:0;
+ top: 0;
+}
+.fl {float:left}
+.slider img {display:block; padding: 2px; border: 1px solid #ccc}
+.slider li {padding: 20px 0; border-bottom: 1px dashed #ccc;overflow:hidden;width:100%}
+.slider p {font-size: 12px;margin:0;padding-left:68px;color:#333;line-height:20px;}
+</style>
+<script type="text/javascript">
+function H$(i) {return document.getElementById(i)}
+function H$$(c, p) {return p.getElementsByTagName(c)}
+var slider = function () {
+ function init (o) {
+  this.id = o.id;
+  this.at = o.auto ? o.auto : 3;
+  this.o = 0;
+  this.pos();
+ }
+ init.prototype = {
+  pos : function () {
+   clearInterval(this.__b);
+   this.o = 0;
+   var el = H$(this.id), li = H$$('li', el), l = li.length;
+   var _t = li[l-1].offsetHeight;
+   var cl = li[l-1].cloneNode(true);
+   cl.style.opacity = 0; cl.style.filter = 'alpha(opacity=0)';
+   el.insertBefore(cl, el.firstChild);
+   el.style.top = -_t + 'px';
+   this.anim();
+  },
+  anim : function () {
+   var _this = this;
+   this.__a = setInterval(function(){_this.animH()}, 20);
+  },
+  animH : function () {
+   var _t = parseInt(H$(this.id).style.top), _this = this;
+   if (_t >= -1) {
+    clearInterval(this.__a);
+    H$(this.id).style.top = 0;
+    var list = H$$('li',H$(this.id));
+    H$(this.id).removeChild(list[list.length-1]);
+    this.__c = setInterval(function(){_this.animO()}, 20);
+    //this.auto();
+   }else {
+    var __t = Math.abs(_t) - Math.ceil(Math.abs(_t)*.07);
+    H$(this.id).style.top = -__t + 'px';
+   }
+  },
+  animO : function () {
+   this.o += 2;
+   if (this.o == 100) {
+    clearInterval(this.__c);
+    H$$('li',H$(this.id))[0].style.opacity = 1;
+    H$$('li',H$(this.id))[0].style.filter = 'alpha(opacity=100)';
+    this.auto();
+   }else {
+    H$$('li',H$(this.id))[0].style.opacity = this.o/100;
+    H$$('li',H$(this.id))[0].style.filter = 'alpha(opacity='+this.o+')';
+   }
+  },
+  auto : function () {
+   var _this = this;
+   this.__b = setInterval(function(){_this.pos()}, this.at*1000);
+  }
+ }
+ return init;
+}();
+</script>
+</head>
+<body>
+<div class="wp">
+ <ul id="slider" class="slider">
+  <li><a class="fl" href="javascript:;"><img src="http://www.codefans.net/jscss/demoimg/201011/u160412.jpg" alt="" /></a>
+   <p>曾虑多情损梵行
+　　
+   入山又恐别倾城
+　　
+   世间安得双全法
+　　
+   不负如来不负卿</p>
+  </li>
+  <li><a class="fl" href="javascript:;"><img src="http://www.codefans.net/jscss/demoimg/201011/u160412.jpg" alt="" /></a>
+   <p>第一最好不相见，如此便可不相恋。
+第二最好不相知，如此便可不相思。<br/>
+第三最好不相伴，如此便可不相欠。
+第四最好不相惜，如此便可不相忆。<br/>
+第五最好不相爱，如此便可不相弃。
+  </li>
+  <li><a class="fl" href="javascript:;"><img src="http://www.codefans.net/jscss/demoimg/201011/u160412.jpg" alt="" /></a>
+   <p>源码爱好者提供各类编程源码、书籍教程、JavaScript/CSS特效代码。<br/>以及常用软件下载等，做有质量的学习型源码下载站。</p>
+  </li>
+  <li><a class="fl" href="javascript:;"><img src="http://www.codefans.net/jscss/demoimg/201011/u160412.jpg" alt="" /></a>
+   <p>今天天气不错，我们都出来郊游了，可不一会就下起了雨，都淋湿了，但心情很爽噢。<br/>必竟我们不怎么出来玩，一出来就碰到了雨，很荣幸哦！</p>
+  </li>
+ </ul>
+</div>
+<script type="text/javascript">
+new slider({id:'slider'})
+</script>
+</body>
+</html>
+
+ 

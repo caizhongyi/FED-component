@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="css/ion.rangeSlider.css"/>
+    <link rel="stylesheet" href="css/ion.rangeSlider.skinNice.css"/>
+    <script src="js/vendor/jquery-1.11.3.min.js"></script>
+    <script src="js/ion-rangeSlider/ion.rangeSlider.js"></script>
+</head>
+<body>
+<input type="text" id="someID" name="rangeName" value="10;100" />
+<button id="showValue" type="button" onclick="console.log($('#someID1').val())">value</button>
+<input type="text" id="someID1" name="rangeName" value="10;100" />
+<script>
+    $("#someID1").ionRangeSlider({
+        min: 0,
+        max: 10000,
+        from: 1000,
+        to: 9000,
+        type: "double",
+        prefix: "$",
+        grid: true,
+        grid_num: 10
+    });
+    $("#someID").ionRangeSlider({
+        min: 0,
+        max: 10000,
+        step: 500,
+        grid: true,
+        grid_snap: true
+    });
+</script>
+</body>
+</html>

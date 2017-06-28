@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+	<head>
+		<title>SWFObject 2 dynamic publishing example page</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+      
+        <script type="text/javascript" src="jquery-1.7.2.min.js"></script> 
+		<script type="text/javascript" src="js/swfobject.js"></script> 
+	
+	</head>
+	<body> 
+   		
+		<div id="myContent">
+			<h1>Alternative content</h1>
+			<p><a href="http://www.adobe.com/go/getflashplayer"><img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" /></a></p>
+	    </div>
+  <!--      <script>
+            var i = 0 ;
+            function mesg(  ){
+                if( i > 10) return ;
+                setTimeout(function(){
+                    console.log( i );
+                    mesg( )
+                    i ++ ;
+                },1000);
+            }
+            mesg();
+        </script>-->
+    	<script type="text/javascript">
+		var flashvars = { 
+		  name1: "hello", 
+		  name2: "world", 
+		  name3: "foobar" 
+		}; 
+		var params = { 
+		  menu		: "false" ,
+		  wmode 	: 'transparent', // 'transparent' | 'Opaque'
+		  
+		  /*
+		  	window 模式
+			默认情况下的显示模式，在这种模式下flash player有自己的窗口句柄，这就意味着flash影片是存在于Windows中的一个显示实例，并且是在浏览器核心显示窗口之上的，所以flash只是貌似显示在浏览器中，但这也是flash最快最有效率的渲染模式。由于他是独立于浏览器的HTML渲染表面，这就导致默认显示方式下flash总是会遮住位置与他重合的所有DHTML层。 但是大多数苹果电脑浏览器会允许DHTML层显示在flash之上，但当flash影片播放时会出现比较诡异的现象，比如DHTML层像被flash刮掉一块一样显示异常。
+	
+	Opaque 模式
+	
+			这是一种无窗口模式，在这种情况下flash player没有自己的窗口句柄，这就需要浏览器需要告诉flash player在浏览器的渲染表面绘制的时间和位置。这时flash影片就不会在高于浏览器HTML渲染表面而是与其他元素一样在同一个页面上,因此你就可以使用z-index值来控制DHTML元素是遮盖flash或者被遮盖。
+	
+	Transparent 模式
+	
+			透明模式，在这种模式下flash player会将stage的背景色alpha值将为0并且只会绘制stage上真实可见的对象，同样你也可以使用z-index来控制flash影片的深度值，但是与Opaque模式不同的是这样做会降低flash影片的回放效果，而且在9.0.115之前的flash player版本设置wmode="opaque"或"transparent"会导致全屏模式失效。
+		  */
+		  quality 	: 'height',
+		  allowscriptaccess : 'sameDomain',
+		  //bgcolor = "#2D264D",
+		  //params.play = "true",
+		  //params.loop = "false",  
+		  //params.scale = "showall", 
+		  //params.menu = "false", 
+		  //params.devicefont = "false", 
+		  //params.salign = "" 
+		}; 
+		var attributes = { 
+		  id: "dynamicContent2", 
+		  name: "dynamicContent2" 
+		}; 
+		swfobject.embedSWF("test.swf", "myContent", "300", "120", "9.0.0", "js/expressInstall.swf" ,flashvars ,params ,attributes,function(){
+			$('#dynamicContent2 [name=wmode]').attr('value','Opaque');
+		});
+	
+
+	
+		</script>
+</body>
+</html>

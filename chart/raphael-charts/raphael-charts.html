@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<script type="text/javascript" src="../jquery/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="charts/raphael.js"></script>
+<script type="text/javascript" src="charts/pie.js"></script>
+<style media="screen">
+            #holder {
+                margin: 0 auto;
+                width: 700px;
+                height: 700px;
+            }
+        </style>
+</head>
+
+<body>
+
+   <table>
+            <tbody>
+                <tr>
+                    <th scope="row">Ruby</th>
+                    <td>40%</td>
+                </tr>
+                <tr>
+                    <th scope="row">JavaScript</th>
+                    <td>26%</td>
+                </tr>
+                <tr>
+                    <th scope="row">Shell</th>
+                    <td>5%</td>
+                </tr>
+                <tr>
+                    <th scope="row">Python</th>
+                    <td>5%</td>
+                </tr>
+                <tr>
+                    <th scope="row">PHP</th>
+                    <td>4%</td>
+                </tr>
+                <tr>
+                    <th scope="row">C</th>
+                    <td>4%</td>
+                </tr>
+                <tr>
+                    <th scope="row">Perl</th>
+                    <td>3%</td>
+                </tr>
+                <tr>
+                    <th scope="row">C++</th>
+                    <td>2%</td>
+                </tr>
+                <tr>
+                    <th scope="row">Java</th>
+                    <td>2%</td>
+                </tr>
+                <tr>
+                    <th scope="row">Objective-C</th>
+                    <td>2%</td>
+                </tr>
+            </tbody>
+        </table>
+        <div id="holder"></div>
+
+<a href="http://raphaeljs.com/">http://raphaeljs.com/</a>
+<script type="text/javascript">
+	// Creates canvas 320 × 200 at 10, 50
+var paper = Raphael(10, 50, 320, 200);
+
+// Creates circle at x = 50, y = 40, with radius 10
+var circle = paper.circle(50, 40, 10);
+// Sets the fill attribute of the circle to red (#f00)
+circle.attr("fill", "#f00");
+
+// Sets the stroke attribute of the circle to white
+circle.attr("stroke", "#fff");
+</script>
+</body>
+</html>

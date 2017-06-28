@@ -1,0 +1,24 @@
+{
+    "name": "jquery-fancybox",
+    "title": "jquery-fancybox",
+    "description": "jquery-fancybox",
+    "version": "1.0.0",
+    "main": "jquery.fancybox.pack.js",
+    "homepage": "http://www.alienjs.net",
+    "author": "zhongyi cai <274142680@qq.com>",
+    "repository": { },
+    "keywords": [
+        "jquery-fancybox",
+        "fancybox",
+        "jquery"
+    ],
+    "output" : [ "jquery.fancybox.js" ],
+    "dependencies": {
+        "jquery" : "^1.11.2"
+    },
+    "devDependencies": {
+
+    },
+    "scripts": {
+    }
+}

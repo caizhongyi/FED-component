@@ -1,0 +1,307 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="jquery/js/jquery-1.4.3.min.js" ></script>
+<script type="text/javascript" src="jquery/jquery-ui.min.js" ></script>
+<title>无标题文档</title>
+<script>
+alert(4%3)
+var a=76;
+var b=36;
+alert(a|b)
+</script>
+
+<script type="text/javascript">
+	function extend(subClass,superClass){
+		var F = function(){};
+		F.prototype = superClass.prototype;
+		subClass.prototype = new F();
+		subClass.prototype.constructor = subClass;
+		subClass.superclass = superClass.prototype; //加多了个属性指向父类本身以便调用父类函数
+		if(subClass.prototype.constructor == Object.prototype.constructor){
+			subClass.prototype.constructor = subClass;
+		}
+   }
+	/*
+	**精灵父类
+	*/
+	var Sprite=function(){
+		this.position = { x: 0 , y : 0 };
+		this.size = { width : 10 , height :  10};
+		this.motionFunc = [] ;
+		this.direction = {};
+		//this.canvas = canvas;
+	};
+	Sprite.prototype={
+	    /*
+	    **每个精灵对象自己的draw函数
+	    */
+	    draw:function(canvas , stepTime){
+	    },
+		/*
+	    **添加运动方式
+	    */
+	    addMotionWay:function(fun){
+	        this.motionFunc.push(fun);
+	    },
+	    /*
+	    **运动计算
+	    */
+	    countMotionFun:function(stepTime){
+			
+	        for(var i=this.motionFunc.length;i--; ){
+	            this.motionFunc[i].call(this,stepTime/100);
+	        }
+			
+	        this.draw(this.canvas ,stepTime);
+	    }
+	}
+	/* object  extend */
+	var  newObject = function(canvas){
+	   Sprite.call(this,canvas);
+	   this.canvas = canvas;
+	   this.init.call(this);
+	};
+	extend(newObject,Sprite);
+	newObject.prototype.init = function(){ 
+		this.addMotionWay(this.move);
+		this.bindKeyEvent();
+	};
+	newObject.prototype.draw = function(canvas , stepTime)
+	{
+		    canvas.ctx.beginPath();
+			canvas.ctx.lineWidth = "1";
+			canvas.ctx.strokeStyle ='#000';
+			canvas.ctx.fillStyle ="rgba("
+				+ Math.floor(0) + ","
+				+ Math.floor(255) + ","
+				+ Math.floor(255) + ","
+				+ "1)";
+			canvas.ctx.arc(this.position.x,this.position.y,20,0,Math.PI*2,true)
+			canvas.ctx.closePath();
+			canvas.ctx.stroke();
+			canvas.ctx.fill();
+	}
+	newObject.prototype.move = function()
+	{
+		   
+		   var val = 2;
+		   if(this.direction.left)
+		   {this.position.x -= val ;}
+		   if(this.direction.right)
+		   {this.position.x += val ;}
+		   if(this.direction.bottom)
+		   {this.position.y += val ;}
+		   if(this.direction.top)
+		   {this.position.y -= val ;}
+		   return this;
+	}
+	newObject.prototype.bindKeyEvent = function()
+	{ 
+	    var _this = this;
+		document.onkeydown = function(e){
+			   var e = e || window.event;
+			　 var currKey=e.keyCode||e.which||e.charCode;
+			　 if((currKey>7&&currKey<14)||(currKey>31&&currKey<47))
+			　 {
+			　 　    switch(currKey)
+			   　 　 {
+				　 　 　 case 8: keyName = "[退格]"; break;
+				　 　 　 case 9: keyName = "[制表]"; break;
+				　 　 　 case 13:keyName = "[回车]"; break;
+				　 　 　 case 32:keyName = "[空格]"; break;
+				　 　 　 case 33:keyName = "[PageUp]";   break;
+				　 　 　 case 34:keyName = "[PageDown]";   break;
+				　 　 　 case 35:keyName = "[End]";   break;
+				　 　 　 case 36:keyName = "[Home]";   break;
+				　 　 	case 37:keyName = "[方向键左]"; _this.direction.left = true ; break;
+				　 　    case 38:keyName = "[方向键上]"; _this.direction.top = true ; ;break;
+				　 　    case 39:keyName = "[方向键右]"; _this.direction.right = true ; ;break;
+			   　 　   　case 40:keyName = "[方向键下]"; _this.direction.bottom = true ; ;break;
+			           
+				　 　 　 case 46:keyName = "[删除]";   break;
+				　 　 　 default:keyName = "";    break;
+			　 　   }
+					
+			　 　   //keystring += keyName
+					document.getElementById('keyval').innerHTML = keyName;
+			　 }  
+			   return this;
+		   }
+		 document.onkeyup = function(e){
+		       var e = e || window.event;
+			　 var currKey=e.keyCode||e.which||e.charCode;
+			　 if((currKey>7&&currKey<14)||(currKey>31&&currKey<47))
+			　 {
+			　 　    switch(currKey)
+			   　 　 {
+				　 　 　 case 8: keyName = "[退格]"; break;
+				　 　 　 case 9: keyName = "[制表]"; break;
+				　 　 　 case 13:keyName = "[回车]"; break;
+				　 　 　 case 32:keyName = "[空格]"; break;
+				　 　 　 case 33:keyName = "[PageUp]";   break;
+				　 　 　 case 34:keyName = "[PageDown]";   break;
+				　 　 　 case 35:keyName = "[End]";   break;
+				　 　 　 case 36:keyName = "[Home]";   break;
+				　 　 　 case 37:keyName = "[方向键左]"; _this.direction.left = false ; break;
+				　 　    case 38:keyName = "[方向键上]"; _this.direction.top = false ; ;break;
+				　 　    case 39:keyName = "[方向键右]"; _this.direction.right = false ; ;break;
+			   　 　   　case 40:keyName = "[方向键下]"; _this.direction.bottom = false ; ;break;
+			          
+				　 　 　 case 46:keyName = "[删除]";   break;
+				　 　 　 default:keyName = "";    break;
+			　 　   }
+					
+			　 　   //keystring += keyName
+					document.getElementById('keyval').innerHTML = keyName;
+			　 }  
+			   return this;
+		 }
+	}
+	/* object  extend */
+	
+	/*
+	** Canvas类 管理所有动画实体sprites
+	*/
+	var Canvas = function(id){
+	    //关联canvas元素
+	    this.canvas=document.getElementById(id);
+	    //精灵字典
+	    this.sprites = [] ;
+	    //当前帧数
+	    this.frame;
+	    this.frameNum;
+	    //所关联canvas元素上下文对象
+	    this.ctx=this.canvas.getContext('2d');
+	    //帧长
+	    this.stepTime;
+	    //触发器
+	    this.sT;
+		this.init.call(this);
+	}
+	 
+	Canvas.prototype={
+	    /*
+	    **初始化
+	    */
+	    init:function(){
+	        this.fps=0;//记录最后一帧的时间
+	        this.lastFrameTime=(new Date()).getTime();
+	        this.frame=0;		//当前帧数归0
+	        this.frameNum=30;	//每30帧计算一次fps
+	        this.stepTime=1;	//和fps成反比
+	    },
+	    /*
+	    **开始
+	    */
+	    begin:function(){
+	        this.sT=setTimeout((function(param){
+	            return function(){ param.render();}
+	        })(this),this.stepTime);
+	    },
+	    /*
+	    **渲染,
+	    */
+	    render:function(){
+	        //计算fps,参考oldj http://oldj.net/
+	        this.frame++;
+	        if(this.frame % this.frameNum == 0){
+	            //
+	            t = (new Date()).getTime();
+	            this.fps= Math.round((this.frameNum*10000)/ (t - this.lastFrameTime)) / 10;
+	            this.lastFrameTime = t;
+	            showFps(this.fps);
+	            // 动态调整 step_time ，保证 fps 恒定
+	            if (this.fps < 29.6 && this.stepTime > 10) {
+	                this.stepTime--;
+	            } else if (this.fps > 30.4) {
+	                this.stepTime++;
+	            }
+	        }
+	        this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
+	        //调用每个精灵的运动方程
+	        for(var i in this.sprites){
+	            if(typeof(this.sprites[i])=="function") continue;
+	            this.sprites[i].countMotionFun(this.stepTime);
+	        }
+	        this.sT=setTimeout((function(param){
+	            return function(){ param.render();}
+	        })(this),this.stepTime);
+	    },
+	    /*
+	    **添加动画元素
+	    */
+	    addSprite:function(name,sprite){
+	        this.sprites[name]=sprite;
+	    },
+	    /*
+	    **删除动画元素
+	    */
+	    removeSprite:function(name){
+	        if(this.sprites[name]){
+	            delete this.sprites[name];
+	        }
+	    },
+	    /*
+	    **停止动画
+	    */
+	    stop:function(){
+	            clearInterval(this.sT)
+	    },
+	    clear:function(){
+	        for(var i in this.sprites){
+	            if(typeof(this.sprites[i])=="function") continue;
+	                delete this.sprites[i];
+	        }
+	    }
+	}
+	/*
+	**显示fps
+	*/
+	function showFps(fps){
+		document.getElementById("fps").innerHTML="FPS:"+fps;
+	}
+	
+	
+</script>
+</head>
+
+<body>
+<canvas id="cv" style="width:500px; height:500px;"></canvas>
+<div id="fps"></div>
+<script type="text/javascript">
+ 
+ 
+
+	  var cv = new Canvas('cv');
+	  var o = new newObject(cv);
+	  
+	/*  function a()
+	  {
+		  this.name = 'a';
+	  }
+	  a.prototype = { getName : 'a' }
+	  function b()
+	  {
+		  a.call(this);
+		 
+		  //this.init.call(this,arguments)
+	  }
+	  extend(b,a);
+	  b.prototype.init = function(){}
+	  
+	  var bb = new  b();
+  	 
+	  for(var i in o)
+	  {
+		  document.write(i + ' :'+ o[i] + '<br/>');
+	  }*/
+
+	  cv.addSprite('o',o);
+	  cv.begin();
+
+</script>
+<div id="keyval"></div>
+</body>
+</html>

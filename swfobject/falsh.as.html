@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+	<head>
+		<title>SWFObject 2.2 dynamic publishing with callback and browser communication</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<script type="text/javascript" src="../js/flash/swfobject.js"></script>
+		<script type="text/javascript">
+		var flashvars = {
+			upurl : 'aHR0cDovL3Bhc3Nwb3J0Ljc2Ni5jb20vdXBsb2FkYXZhdGFy&callback=return_avatar',
+			photo : 'http://avatar.766.com/e6a6f257/a5c8/468c/8057/7f91403ddc18/b_avatar.jpg?0'
+		};
+		var params = { 	
+			swliveconnect:"true" ,
+			menu		: "false" ,
+		    wmode 	: 'transparent', 
+		    quality 	: 'height',
+		    allowscriptaccess : 'sameDomain'
+		};
+		var attributes = { id:"myCom", name:"myCom" };
+		swfobject.embedSWF("test8_com.swf", "myContent", "300", "120", "9.0.0", "js/flash/expressInstall.swf", flashvars, params, attributes, callbackFn);
+		
+		function AStoJSviaExternalInterface(str) {
+			document.getElementById("receive1").value = str;
+		}
+		function myCom_DoFSCommand(command, args) {
+  			document.getElementById("receive2").value = args;
+		}
+		function AStoJSviaGetURL(str) {
+			document.getElementById("receive3").value = str;
+		}
+		function callbackFn(status) {
+			if (status.success) {
+				var obj = status.ref;
+				document.getElementById("but1").onclick = function() {
+					if (obj && typeof obj.JStoASviaExternalInterface != "undefined") {
+						obj.JStoASviaExternalInterface(document.getElementById("send").value);
+					}
+				};
+				document.getElementById("but2").onclick = function() {
+					if (obj && typeof obj.SetVariable != "undefined") {
+						obj.SetVariable("JStoASviaSetVariable", document.getElementById("send").value);
+					}
+				};
+			}
+		};
+		</script>
+		<!--[if IE]>
+		<script type="text/javascript" event="FSCommand(command,args)" for="myCom">
+		myCom_DoFSCommand(command, args);
+		</script>
+		<![endif]-->
+	</head>
+	<body>
+        website : <a href="http://www.bobbyvandersluis.com/swfobject/testsuite_2_2/test_dynamic_com2.html">http://www.bobbyvandersluis.com/swfobject/testsuite_2_2/test_dynamic_com2.html</a>
+		<div id="myContent">
+			<h1>Alternative content</h1>
+			<p><a href="http://www.adobe.com/go/getflashplayer"><img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" /></a></p>
+		</div>
+		<p><label for="send">To Flash: </label><input type="text" id="send" name="send" maxlength="20" /><br /><button id="but1">ExternalInterface</button> <button id="but2">SetVariable</button></p>
+		<p><label for="receive1">ExternalInterface: </label><input type="text" id="receive1" name="receive1" style="border:none; background-color:transparent;" disabled="disabled" /></p>
+		<p><label for="receive2">fscommand: </label><input type="text" id="receive2" name="receive2" style="border:none; background-color:transparent;" disabled="disabled" /></p>
+		<p><label for="receive3">getURL: </label><input type="text" id="receive3" name="receive3" style="border:none; background-color:transparent;" disabled="disabled" /></p>
+	</body>
+</html>

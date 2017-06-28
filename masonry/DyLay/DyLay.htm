@@ -1,0 +1,47 @@
+<html><head>
+<title>响应式流布局插件DyLay DEMO by 设计达人</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="DyLay_files/jquery_002.js"></script>    
+<script src="DyLay_files/jquery.js"></script>
+<script src="DyLay_files/dylay.js"></script>
+<link href="DyLay_files/bootstrap.css" rel="stylesheet" media="screen">
+<link href="DyLay_files/dylay.css" rel="stylesheet" media="screen">
+<script>
+jQuery(document).ready(function () {
+    var $dylay = jQuery('#dylay');
+// 初始化
+	$dylay.dylay({
+// 设置动画速度
+    speed: 1000,
+// 动画类型
+    easing: 'easeOutElastic',
+// 定义选择器
+    selector: '>li'
+	});
+});
+</script>
+</head>
+<body>
+<div class="container">
+<h1>响应式流布局插件DyLay尝试</h1>
+<div class="box">
+<ul style="position: relative; height: 68px;" id="dylay">
+	<li style="width: 10%; height: 20px; position: absolute; top: 0px; left: 1px;" class="voyelle" data-foo="5">A</li>
+	<li style="width: 10%; height: 40px; position: absolute; top: 0px; left: 132px;" class="consonne" data-foo="6">B</li>
+	<li style="width: 10%; height: 40px; position: absolute; top: 0px; left: 263px;" class="consonne" data-foo="3">C</li>
+	<li style="width: 10%; height: 20px; position: absolute; top: 0px; left: 394px;" class="consonne" data-foo="2">D</li>
+	<li style="width: 10%; height: 60px; position: absolute; top: 0px; left: 525px;" class="voyelle" data-foo="4">E</li>
+	<li style="width: 10%; height: 60px; position: absolute; top: 0px; left: 656px;" class="consonne" data-foo="1">F</li>
+	<li style="width: 10%; height: 20px; position: absolute; top: 0px; left: 787px;" class="consonne" data-foo="7">G</li>
+</ul>
+</div>
+<div class="box">
+<p><a href="http://www.shejidaren.com/responsive-layout-dylay.html">返回插件教程页</a></p></div>
+<p>by <a href="http://www.shejidaren.com/">设计达人</a></p>
+
+</div>
+
+
+
+</body></html>

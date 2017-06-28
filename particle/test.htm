@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title></title>
+</head>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js" ></script>
+<script type="text/javascript" src="js/zero.animation.js"></script>
+<body>
+<script type="text/javascript">
+
+
+    function step() {
+        var pos = el.position();
+        var ctx = canvas.getContext('2d');
+        var block =  $('#block');
+        ctx.clearRect(0,0 ,500,500);
+        ctx.strokeStyle = "#000000";
+        ctx.fillStyle = "#FFFFFF";
+        ctx.beginPath();
+        ctx.arc(pos.x, pos.y, 5, 0, Math.PI*2, true);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+     //   block.css({ left : pos.x,  top : pos.y });
+    }
+
+    var start = function(){
+        window.canvas = document.getElementById('kinematicsCancas');
+        window.v = new zero.vector();
+        window.el = new zero.vector.elem({
+           pos : { x : document.getElementById('x').value , y : document.getElementById('y').value }
+        });
+       // window.el.withoutGravity = true;
+        window.el.v = { x : document.getElementById('Vx').value , y : document.getElementById('Vy').value  }
+      // window.el.a = { x : document.getElementById('Ax').value || 0, y : document.getElementById('Ay').value || 0 }
+        window.v.add(el)
+        v.start(step);
+    }
+
+    function step1() {
+        var ctx = canvas1.getContext('2d');
+
+        ctx.clearRect(0,0 ,500,500);
+        for(var i = 0 ; i < this.elems.length;  i++ ){
+            var pos = this.elems[i].position();
+            ctx.strokeStyle = "#000000";
+            ctx.fillStyle = "#FFFFFF";
+            ctx.beginPath();
+            ctx.arc(pos.x, pos.y, 5, 0, Math.PI*2, true);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+        }
+    }
+
+    var start1 = function(){
+        window.canvas1 = document.getElementById('kinematicsCancas1');
+        window.v1 = new zero.vector();
+        for(var i = 0 ;i < 100; i++){
+            window.v1.add(new zero.vector.elem({
+                v : {
+                    x : (Math.random() - 0.5 > 0 ? 1 : -1) * parseInt(Math.random() * 10) ,
+                    y : (Math.random() - 0.5 > 0 ? 1 : -1) * parseInt(Math.random() * 10)
+                } ,
+                pos : { x : 100 , y : 100  }
+            }));
+        }
+        v1.start(step1);
+    }
+</script>
+
+<br />
+初始位置;<input id="x" type="text" value="100"/><input id="y" type="text" value="100"/> <br>
+初始速度;<input id="Vx" type="text" value="20"/><input id="Vy" type="text" value="-20"/>  <br>
+<!--初始加速度;<input id="Ax" type="text" value="0"/><input id="Ay" type="text" value="0"/>-->
+<div id="block" style="width: 100px;height: 100px; background: red; position: absolute; left: 1000px;"></div>
+<button onclick="window.v && v.stop();window.canvas && canvas.getContext('2d').clearRect(0,0 ,500,500);start()">Run</button>
+<button onclick="v.stop();">Stop</button>
+<button onclick="el.stop();">stop el</button>
+<button onclick="el.start( { x : -20 , y :0});">start el</button>
+<br />
+<canvas id="kinematicsCancas" width="400" height="300" style="border: 1px solid #ddd;"></canvas> <br>
+<br /><br />
+<canvas id="kinematicsCancas1" width="400" height="300" style="border: 1px solid #ddd;"></canvas><br>
+<button onclick="window.v1 && window.v1.stop();window.canvas1 && canvas1.getContext('2d').clearRect(0,0 ,500,500);start1()">Run</button>
+<button onclick="v1.stop();">Stop</button>
+</body>
+</html>

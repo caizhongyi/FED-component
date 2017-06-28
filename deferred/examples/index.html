@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <title></title>
+    <meta charset="utf-8">
+    <script src="../../jquery/dist/jquery.js"></script>
+    <script src="../../alienjs-date/src/index.js"></script>
+    <script src="../src/index.js"></script>
+  </head>
+  <body>
+    <script>
+      $(function () {
+          //Deferred.when( , , ,).done();
+      
+          var func = function(){
+              var d = Deferred();
+              function a() {
+                  d.resolveWith({name: 'name'}, ['resolved']);
+                 // d.rejectWith({name: 'name'}, ['resolved']);
+                  console.log('over!')
+              }
+      
+              setTimeout(a, 1000);
+              // Set object as a promise( new func().done())
+              //return d.promise(func);
+              return d.promise();
+          }
+      
+          func().done(function( e , a ){
+              console.log(this)
+              console.log(e)
+              console.log(a)
+          }).fail(function( e , a ){
+          })
+
+          Deferred.when(func()).done(function( e , a ){
+              console.log('when')
+          })
+      })
+    </script>
+  </body>
+</html>

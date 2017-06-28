@@ -1,0 +1,24 @@
+{
+    "name": "jquery-json2select",
+    "title": "jquery-json2select",
+    "description": "多联级地区选择",
+    "version": "1.0.0",
+    "main": "dist/index.js",
+    "homepage": "http://www.alienjs.net",
+    "author": "zhongyi cai <274142680@qq.com>",
+    "repository": { },
+    "keywords": [
+        "jquery-json2select",
+        "jquery",
+        "json2select"
+    ],
+    "output" : [ "index.js" , "area.js" ],
+    "dependencies": {
+        "jquery" : "^1.11.2"
+    },
+    "devDependencies": {
+
+    },
+    "scripts": {
+    }
+}

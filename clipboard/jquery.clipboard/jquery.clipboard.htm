@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title></title>
+<!--[if IE]><script type="text/javascript" src="js/PIE-1.0beta4/PIE.js" ></script><![endif]-->
+<!--[if IE]> <script type="text/javascript" src="js/html5.js" ></script><![endif]-->
+<link rel="stylesheet" type="text/css" media="all" href="../css/base-min.css"/>
+<link rel="stylesheet" type="text/css" media="all" href="../css/demo.css"/>
+<!--[if IE 6]>
+<script type="text/javascript" src="js/ie7/IE7.js" ></script>
+<script type="text/javascript" src="js/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script type="text/javascript">
+DD_belatedPNG.fix('a');
+</script>
+<![endif]-->
+<script type="text/javascript" src="js/jquery-1.4.3.min.js" ></script>
+<script type="text/javascript" src="../jquery.ui/jquery-ui.min.js" ></script>
+<link rel="stylesheet" type="text/css" media="all" href="../css/czy.ui.textbox.css"/> 
+<script type="text/javascript" src="../czy.ui/js/czy.core.js"></script>
+<script type="text/javascript" src="../czy.ui/js/czy.ui.core.js"></script>
+<script type="text/javascript" src="../zero/js/jquery.clipboard.js"></script>
+<script type="text/javascript" >  
+        //在firefox中测试的是很需要放到tomcat下或者apache下  
+        jQuery(function($){  
+            $.clipboardReady(function() {  
+                $("#copy").click(function () {
+					// console.log($(this).clipboard());
+                    if($(this).clipboard().status)
+					{
+						$('#text').text('拷贝成功了 哈哈');
+					};  
+                    return false;  
+                });  
+                //其他复制  
+            }, { swfpath: "jquery/jquery.clipboard.swf", debug: true });  
+        });  
+</script>  
+
+</head>
+<body>
+<input id="copy" type="button" value="copy"/>  
+<input  type="text" /> 
+<div id="text"></div>  
+</body>
+</html>

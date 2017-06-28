@@ -1,0 +1,52 @@
+<html>
+  <head>
+     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  </head>
+  <body>
+    <div id="chart_div" style="width: 900px; height: 500px;"></div>
+    <a href="https://developers.google.com/chart/interactive/docs/gallery/piechart?hl=zh-CN">google chart api</a>
+     <script type="text/javascript">
+	  var arr = [
+			  ['Work',    11],
+			  ['Eat',      2],
+			  ['Commute',  2],
+			  ['Watch TV', 2],
+			  ['Sleep',    7]
+			];
+	  var elem = document.getElementById('chart_div');
+	  if(window.google){
+		  function drawChart() {
+			var data = new google.visualization.DataTable();
+			data.addColumn('string', 'Task');
+			data.addColumn('number', 'Hours per Day');
+			data.addRows(arr);
+	
+			var options = {
+			  title: 'My Daily Activities',
+			  is3D: true
+			};
+	
+			var chart = new google.visualization.PieChart(elem);
+			chart.draw(data, options);
+		  }
+		  google.load("visualization", "1", {packages:["corechart"]});
+		  google.setOnLoadCallback(drawChart);
+		  
+	  }
+	  else{
+		  var html = '<table>';
+		  var sum = 0 ;
+		  for(var i =0 ; i<arr.length ; i++){
+		  	sum+=arr[i][1];
+		  }
+		  for(var i =0 ; i<arr.length ; i++){
+		  	 html += '<tr>';
+			 html += '<td>'+arr[i][0] +'</td>'+ '<td>'+arr[i][1]+'</td>'+ '<td>'+ Math.round(arr[i][1]/sum*100) +'%</td>';
+			 html += '</tr>';
+		  }
+		  html += '</table>';
+	  	  elem.innerHTML = html;
+	  }
+    </script>
+  </body>
+</html>

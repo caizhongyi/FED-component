@@ -1,0 +1,59 @@
+{
+  "name": "select2",
+  "description": "Browserify-ed version of Select2.",
+  "homepage": "http://ivaynberg.github.io/select2",
+  "author": {
+    "name": "Igor Vaynberg"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/chrisjbaik/select2.git"
+  },
+  "version": "3.5.1-browserify-fix",
+  "jspm": {
+    "main": "select2",
+    "files": [
+      "select2.js",
+      "select2.png",
+      "select2.css",
+      "select2-spinner.gif"
+    ],
+    "shim": {
+      "select2": {
+        "imports": [
+          "jquery",
+          "./select2.css!"
+        ],
+        "exports": "$"
+      }
+    },
+    "buildConfig": {
+      "uglify": true
+    }
+  },
+  "gitHead": "af96d496c43f7518c310a4d1aa70a4b268452c11",
+  "bugs": {
+    "url": "https://github.com/chrisjbaik/select2/issues"
+  },
+  "_id": "select2@3.5.1-browserify-fix",
+  "scripts": {},
+  "_shasum": "235701dd6d770d04f0f4b9b57dc12202f1cd9f58",
+  "_from": "select2@",
+  "_npmVersion": "1.4.14",
+  "_npmUser": {
+    "name": "chrisjbaik",
+    "email": "chrisjbaik@gmail.com"
+  },
+  "maintainers": [
+    {
+      "name": "chrisjbaik",
+      "email": "chrisjbaik@gmail.com"
+    }
+  ],
+  "dist": {
+    "shasum": "235701dd6d770d04f0f4b9b57dc12202f1cd9f58",
+    "tarball": "http://registry.npmjs.org/select2/-/select2-3.5.1-browserify-fix.tgz"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/select2/-/select2-3.5.1-browserify-fix.tgz"
+}

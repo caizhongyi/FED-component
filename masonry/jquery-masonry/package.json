@@ -1,0 +1,24 @@
+{
+    "name": "jquery-masonry",
+    "title": "jquery-masonry",
+    "description": "jquery-masonry 流式布局",
+    "version": "1.0.0",
+    "main": "jquery-masonry.min.js",
+    "homepage": "http://www.alienjs.net",
+    "author": "zhongyi cai <274142680@qq.com>",
+    "repository": { },
+    "keywords": [
+        "jquery-masonry",
+        "masonry",
+        "jquery"
+    ],
+    "output" : [ "index.js" ],
+    "dependencies": {
+        "jquery" : "^1.11.2"
+    },
+    "devDependencies": {
+
+    },
+    "scripts": {
+    }
+}

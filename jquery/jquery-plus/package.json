@@ -1,0 +1,24 @@
+{
+    "name": "jquery-plus",
+    "title": "jquery-plus",
+    "description": "jquery 功能扩展",
+    "version": "1.0.0",
+    "main": "dist/index.js",
+    "homepage": "http://www.alienjs.net",
+    "author": "zhongyi cai <274142680@qq.com>",
+    "repository": { },
+    "keywords": [
+        "plus",
+        "jquery",
+        "jquery-plus"
+    ],
+    "output" : [ "center.js" , "html.js" , "random.js" , "randomload.js" , "selected.js" , "selected.js" , "serialize.js" , "split.js" , "swap.js" ],
+    "dependencies": {
+        "jquery" : "^1.11.2"
+    },
+    "devDependencies": {
+
+    },
+    "scripts": {
+    }
+}

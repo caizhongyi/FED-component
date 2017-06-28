@@ -1,0 +1,600 @@
+{php $cur_menu = 'my';//菜单管理中心高亮}
+{php $custom_body_class='user_bodybg';//body的样式}
+{php $load_css=array('member/register','formvalidator','member','public_manage','dialog','jquery.atwho');//加载v3样式}
+{php $load_js = array('box','jquery.form','formvalidator','formvalidatorregex','dialog','content_addtop','swfupload_handler','public_manage','jquery.atwho',mailAutoComplete)}
+{template "public","header","v3"}<!-- v3头部 -->
+<style type="text/css">
+ select{
+	width: 253px;
+}
+</style>
+<style>
+#cert_photo_preview img{
+	 border:1px solid #D8D6D6;
+	 width:250px;
+	 height: 115px;
+}
+#company_licence_preview img
+{
+	border:1px solid #D8D6D6;
+	 width:250px;
+	 height: 115px;
+}
+
+</style>
+<script type="text/javascript">
+window.onload = function(){
+   $("#code_img").attr('src',$("#code_img").attr('src')+'&'+Math.random());
+};
+</script>
+
+<script>
+$(function(){
+	$.formValidator.initConfig({wideword:true,autotip:true,formid:"myform",onerror:function(msg){},onsuccess:function(){
+		//return confirm('请确认您填写的身份认证信息，该信息再通过审核后将无法修改!');
+	}});
+	  var data = ["189.cn","qq.com","gmail.com","126.com","163.com","hotmail.com","yahoo.com","yahoo.com.cn","live.com","sohu.com","sina.com","ffcs.cn"];
+	            $("#email").atwho("@",{
+	                'tpl': "<li data-value='${name}'>${name} <small style='display:none;'>${name}</small></li>",
+	                'data':data,
+	                'limit':6,
+	                'callbacks': {
+	                    filter: function (query, data, search_key) {
+	                        return $.map(data, function(item, i) {
+	                            return item[search_key].toLowerCase().indexOf(query) < 0 ? null : item
+	                        })
+	                    }
+	                }
+	            });  
+	            //$("#email").mailAutoComplete(); 
+
+	
+	$("#cert_number").formValidator({onshow:"请输入15位/18位身份证号码",onfocus:"请输入15位/18位身份证号码",onerror:"身份证号码错误，请检查"})
+	.inputValidator({min:0,max:18,onerror:"证件号码错误，请检查"})
+	.regexValidator({regexp:'^(\\d{18,18}|\\d{15,15}|\\d{14,14}x|\\d{17,17}x)$',onerror:"证件号码错误，请检查"});
+	$("#realname").formValidator({onshow:"请填写真实姓名",onfocus:"请填写真实姓名",onempty:"&nbsp", empty:true}).inputValidator({min:1,max:30,onerror:"请填写真实姓名"});
+	$("#dev_name").formValidator({onshow:"设置您的昵称让更多人认识您",onfocus:"设置您的昵称让更多人认识您",onempty:"&nbsp", empty:false}).inputValidator({min:1,max:30,onerror:"请填写昵称"});
+	$("#com_name").formValidator({onshow:"请简单填写企业名称",onfocus:"请简单填写企业名称",onempty:"&nbsp", empty:false}).inputValidator({min:1,max:30,onerror:"请填写企业名称"});
+
+	$("#phonenum").val('{$_SESSION['last_key']['userid']}').formValidator({onshow:"请正确填写手机号码",onfocus:"请正确填写手机号码",onempty:"&nbsp",empty:true})
+	.inputValidator({min:0,max:11,onerror:"请正确填写手机号码"})
+	.regexValidator({regexp:"^(1)[0-9]{10}$",onerror:"请正确填写手机号码"});
+	
+	$("#dev_description").formValidator({
+		onshow : "请简述您的个人信息,不超过100个汉字或者300个英文字母",
+		onfocus : "请简述您的个人信息,不超过100个汉字或者300个英文字母",
+		onempty:"&nbsp",
+		empty : true
+	}).inputValidator({
+		min : 3,
+		max : 300,
+		onerror : "不超过100个汉字或者300个英文字母"
+	});
+	$("#com_description").formValidator({
+		onshow : "请简述企业简介,不超过100个汉字或者300个英文字母",
+		onfocus : "请简述企业简介,不超过100个汉字或者300个英文字母",
+		onempty:"&nbsp",
+		empty : true
+	}).inputValidator({
+		min : 3,
+		max : 300,
+		onerror : "不超过100个汉字或者300个英文字母"
+	});
+	
+	$("#ownerphone").formValidator({onshow:"请正确填写联系电话",onfocus:"请正确填写联系电话",onempty:"&nbsp",empty:false})
+	.inputValidator({min:0,max:15,onerror:"请正确填写联系电话"})
+	.regexValidator({regexp:"^[0-9-]{6,13}$",onerror:"请正确填写联系电话"});
+	$("#website").formValidator({
+		onshow : "您的个人网站",
+		onfocus : "需以http://或https://开头",
+		onempty:"　",
+		empty : true
+	}).regexValidator({
+		regexp : "^https?:\\/\\/",
+		onerror : "需以http://或https://开头"
+	});
+	$("#com_name").formValidator({onshow:"用户名是您在本平台上显示的名称",onfocus:"用户名不超过6个汉字或者20个英文字母"}).inputValidator({min:3,max:20,onerror:"用户名不超过6个汉字或者20个英文字母"}).regexValidator({regexp:"ps_username",datatype:"enum",onerror:"用户名格式错误"}).ajaxValidator({
+	    type : "get",
+		url : "",
+		data :"m=member&c=index&a=public_check_com_name_ajax",
+		datatype : "html",
+		async:'false',
+		success : function(data){
+			if( data == "1" ) {
+                return true;
+			} else {
+                return false;
+			}
+		},
+		buttons: $("#dosubmit"),
+		onerror : "禁止注册或者用户已存在",
+		onwait : "检测用户名是否已存在..."
+	});
+	$("#dev_name").formValidator({onshow:"用户名是您在本平台上显示的名称",onfocus:"用户名不超过6个汉字或者20个英文字母"}).inputValidator({min:3,max:20,onerror:"用户名不超过6个汉字或者20个英文字母"}).regexValidator({regexp:"ps_username",datatype:"enum",onerror:"用户名格式错误"}).ajaxValidator({
+	    type : "get",
+		url : "",
+		data :"m=member&c=index&a=public_check_dev_name_ajax",
+		datatype : "html",
+		async:'false',
+		success : function(data){
+			if( data == "1" ) {
+                return true;
+			} else {
+                return false;
+			}
+		},
+		buttons: $("#dosubmit"),
+		onerror : "禁止注册或者用户已存在",
+		onwait : "检测用户名是否已存在..."
+	});
+	$("#email").formValidator({onshow:"请填写常用邮箱,该邮箱用于接收重要信息",onfocus:"请填写常用邮箱,该邮箱用于接收重要信息",oncorrect:"邮箱格式正确"}).regexValidator({regexp:"email",datatype:"enum",onerror:"邮箱格式错误"}).ajaxValidator({
+	    type : "get",
+		url : "",
+		data :"m=member&c=index&a=public_checkemail_ajax",
+		datatype : "html",
+		async:'false',
+		success : function(data){	
+			//FIXME 测试先把 邮箱验证去掉
+			//return true;
+            if( data == "1" ) {
+                return true;
+			} else {
+                return false;
+			}
+		},
+		buttons: $("#dosubmit"),
+		onerror : "禁止注册或邮箱已存在",
+		onwait : "请稍候..."
+	});
+	$("#company_licence").attr('readonly','true');
+	$("#logo").attr('readonly','true');
+	$("#cert_photo").attr('readonly','true');
+	
+	{$formValidator}
+	$(":checkbox[name='protocol']").formValidator({tipid:"protocoltip",onshow:"{L('read_protocol')}",oncorrect:" ",onfocus:"{L('read_protocol')}"}).inputValidator({min:1,onerror:"{L('read_protocol')}"});
+	
+	$("#code").formValidator({
+		onshow:"=HIDE=",
+		onfocus:"=HIDE=",
+		oncorrect:"正确"
+	}).ajaxValidator({
+		type : "get",
+		url : "",
+		data :"m=member&c=index&a=public_check_code",
+		datatype : "html",
+		async:'false',
+		success : function(data){	
+            if( data == "1" ) {
+                return true;
+			} else {
+                return false;
+			}
+		},
+		buttons: $("#dosubmit"),
+		onerror : "验证码输入错误",
+		onwait : "请稍候..."
+	});
+	
+	$("#knewfrom").formValidator({
+		onshow : "请选择来源",
+		onfocus : "请选择来源"
+	}).functionValidator({fun:isSelected,onerror : "请选择来源"});
+	
+	//刷新验证码
+	$("#refresh_code").click(function(){
+		$("#code_img").attr('src',$("#code_img").attr('src')+'&'+Math.random());
+	});
+	
+	$("#cert_photo").change(function(){
+		if($("#cert_photo").val()!="" || $("#cert_photo").val()!=null){
+			$("#cert_photoTip").attr("class","onCorrect");
+		}
+	});
+	
+});
+function isSelected(){
+	var knewfrom = $("#knewfrom").val();
+	if(knewfrom=='0'){
+		return false;
+	}
+	if(knewfrom=='6'){
+		$("#sub_from_name").css("display","inline")
+						   .focus();
+	}else{
+		$("#sub_from_name").css("display","none");
+	}
+	
+	return true;
+}
+
+
+function check_protocol(id) {
+	var flag = $("#protocol").attr("checked");
+	if($("#protocol").attr("checked") == 'checked') {
+		show_protocol(id);
+		$("#protocoltip").hide();
+	} else {
+		$("#protocol").removeAttr("checked");
+		$("#protocoltip").show();
+	}
+	
+}
+
+function show_protocol(id) {
+	art.dialog({lock:true,title:'{$agreement['title']}',id:'protocoliframe', iframe:'?m=agreement&a=show&id='+id,width:'700',height:'400',yesText:'{L('agree')}'}, function(){
+		$("#protocol").attr("checked",true);
+	});
+};
+function person_chck(){
+	if($("#cert_photo").val() == '') {
+		alert('请上传证件照片');
+		return false;
+	}
+
+	return true;
+}
+function company_chck(){
+	if($('#live_area').val()==''){
+		alert('请填写完整企业所在地.');
+		return false;
+	}
+	if($('#area').val()==''){
+		alert('请填写完整企业注册地.');
+		return false;
+	}
+	if($("#company_licence").val()==''){
+		alert('请上传企业执照');
+		return false;
+	}
+	
+	return true;
+}
+$(function(){
+	
+	$('#area_a').change(function(){
+	   $('#area_c').hide();
+	   var selectedId = $('#area_a option:selected') .val();
+	   if(selectedId!=''){
+		     $.getJSON('{buildurl('public_getlinkage','index','member')}', {bid:selectedId,date:new Date().getTime()},function(json){
+		    	 if(json!=''){
+			    	 $('#area_b').html("<option value=''>请选择市县</option>");
+			    	 for(var i=0;i<json.length;i++){
+						$('#area_b').append("<option value="+json[i].linkageid+">"+json[i].name+"</option>");
+					}
+		    	}
+	       }); 
+	   }else{
+		   $('#area_b').html("<option value=''>请选择市县</option>");
+		   $('#area').val('');
+	   }
+	});
+
+	
+	$('#area_b').change(function(){
+		var selectedId = $('#area_b option:selected') .val();
+		 if(selectedId!=''){
+			 $('#area').val(selectedId);
+		 }else{
+			 $('#area').val('');
+		 }
+	});
+	
+	//----------------------------------------------------------
+	$('#live_area_a').change(function(){
+		   $('#live_area_c').hide();
+		   var selectedId = $('#live_area_a option:selected') .val();
+		   if(selectedId!=''){
+			     $.getJSON('{buildurl('public_getlinkage','index','member')}', {bid:selectedId,date:new Date().getTime()},function(json){
+			    	 if(json!=''){
+				    	 $('#live_area_b').html("<option value=''>请选择市县</option>");
+				    	 for(var i=0;i<json.length;i++){
+							$('#live_area_b').append("<option value="+json[i].linkageid+">"+json[i].name+"</option>");
+						}
+			    	}
+		       }); 
+		   }else{
+			   $('#live_area_b').html("<option value=''>请选择市县</option>");
+			   $('#live_area').val('');
+		   }
+		});
+		
+		
+		$('#live_area_b').change(function(){
+			var selectedId = $('#live_area_b option:selected') .val();
+			 if(selectedId!=''){
+				 $('#live_area').val(selectedId);
+			 }else{
+				 $('#live_area').val('');
+			 }
+		});
+		
+		
+});
+$(function(){
+	$('#cert_photo_preview').click(function(){
+		flashupload('cert_photo_images', '附件上传','cert_photo',insert_thumb_images,'1,gif|jpg|jpeg|png|bmp,0,,','member','','{php echo upload_key('1,gif|jpg|jpeg|png|bmp,0,,')}')
+	});
+	$('#company_licence_preview').click(function(){
+		flashupload('company_licence_images', '附件上传','company_licence',insert_thumb_images,'1,gif|jpg|jpeg|png|bmp,0,,','member','','{php echo upload_key('1,gif|jpg|jpeg|png|bmp,0,,')}')
+	});
+});
+
+</script>
+
+    <!-- main -->
+    <div class="container row-fluid register_wrap">
+       	{if !isset($_GET['modelid'])}
+        <!--注册步骤-->
+        <!--注册第一步-->
+        <div class="register_step step1"></div>
+        <div class="register_contain">
+        
+        <!--选择类型-->
+        <div class="f18">请选择您要注册的开发者类型：</div>
+		<div class="select">
+        	<div class="select_gekf"><a  href="{buildurl('public_connect','index','member',array('modelid'=>10))}">个人开发者</a></div>
+            <div class="select_zhong">&nbsp;</div>
+            <div class="select_qykf"><a href="{buildurl('public_connect','index','member',array('modelid'=>11))}">企业开发者</a><p style="float: right; color: red;width: 350px">友情提示：您如需使用支付能力，请以企业开发者的身份进行注册</p></div>
+        </div>
+       <div class="clear"></div>	
+        <!--/选择类型-->
+       
+        <!--/注册第一步-->
+        {elseif $_GET['modelid']==11}
+        <div class="register_step step2"></div>
+		<!--能力提供方-->
+        	<div class="register_contain" >
+        	<!-- contain -->
+	        <form class="form-horizontal" method="post" action="{buildurl('register','','member')}" id="myform"  onsubmit="return company_chck()">
+	        
+	        <fieldset class="regist_fieldset mt_30">
+	          <legend>基本信息<span>（带<strong>*</strong>号为必填项）</span></legend>
+					<div class="control-group">
+						<label class="control-label " for="focusedInput"> 注册类型：</label>
+						<div class="controls" style="padding-top:6px;color: #999999">
+								企业开发者
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="focusedInput"><font color="red">*</font>企业简称：</label>
+						<div class="controls">
+							<input id="com_name" class="input-xlarge focused" type="text" value="" name="username">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="focusedInput"><font color="red">*</font>E-Mail：</label>
+						<div class="controls">
+							<input id="email" class="input-xlarge focused" type="text" value=""  name="email">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="focusedInput"><font color="red">*</font>企业联系人：</label>
+						<div class="controls">
+							<input id="ownername" name="info[ownername]" class="input-xlarge focused" type="text" value="">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="focusedInput"><font color="red">*</font>联系手机：</label>
+						<div class="controls">
+							<input id="phonenum" class="input-xlarge focused" type="text" value="" name="info[phonenum]">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="focusedInput"><font color="red">*</font>企业联系电话：</label>
+						<div class="controls">
+							<input id="ownerphone" class="input-xlarge focused" type="text" value="" name="info[ownerphone]">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="focusedInput">所在地区：</label>
+						<div class="controls">
+							{pc:member action="first_class" return="first_class"}
+								<select class="regist_sel" name="live_area_a" id="live_area_a">
+									<option value="">请选择省市</option>
+										{loop $first_class $f}
+									<option value="{$f['linkageid']}">{$f['name']}</option>
+										{/loop}
+								</select>
+								{/pc}
+								<select class="regist_sel" name="live_area_b" id="live_area_b" >
+									<option value="">请选择区市</option>
+								</select>
+								<select class="regist_sel" name="live_area_c" id="live_area_c" style="display:none;">
+									<option value="">请选择区县</option>
+								</select>
+								<input type="hidden" name="live_area" id="live_area" value=""/>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="focusedInput">企业简介：</label>
+						<div class="controls">
+						<textarea id="com_description" style="width:70%;height:66px;" name="info[description]"></textarea>	
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="focusedInput"><font color="red">*</font>获知来源：</label>
+						<div class="controls">
+						{$forminfos['knewfrom']['form']}
+						<input id="sub_from_name" class="input-xlarge focused" type="text" value=""  name="sub_from_name" style="display:none;" placeholder="请输入来源"/>
+						</div>
+					</div>
+					</fieldset>
+					<fieldset class="regist_fieldset mt_30">
+					<legend>企业信息认证<span class="c_red">（以下内容需要审核，请如实填写）</span></legend>
+					<div class="control-group">
+						<label class="control-label" for="focusedInput"><font color="red">*</font>企业全称：</label>
+						<div class="controls">
+							<input id="companyname" name="info[companyname]" class="input-xlarge focused" type="text" value="" >
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="focusedInput"><font color="red">*</font>法人姓名：</label>
+						<div class="controls">
+							<input  id="lawname" name="info[lawname]" class="input-xlarge focused" type="text" value="" >
+						</div>
+					</div>
+					<div class="control-group">
+						
+							<label class="control-label" for="focusedInput" style="margin-top:50px;"><font color="red">*</font> 营业执照：</label>
+						<input type='hidden' name='info[company_licence]' id='company_licence' value="">
+						<div class="controls" id="company_licence_preview">
+							<img class="company_licence_upload"  src="{APP_PATH}statics/v3/css/member/register/yingyzhzh.gif"/>
+						</div>
+						
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="focusedInput"><font color=red>*</font>验证码：</label>
+						<div class="controls">
+						<input type="text" id="code" name="code" size="10" class="input-text" sytle="width:170px">
+								{form::checkcode('code_img', '4', '14', 80, 24)} &nbsp;<a id="refresh_code" style="cursor:default;">刷新</a>
+								<input type="hidden" name="checkcode" id="checkcode"/>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="focusedInput"></label>
+						<div class="controls">
+						<input type="hidden"  value="{$modelid}" name="modelid" />
+								<input type="checkbox" style="width: 20px; margin-top: 0px;" name="protocol" id="protocol" value="" onclick="check_protocol({$agreement['id']});">
+								我已阅读并接受《<a href="javascript:void(0);" onclick="show_protocol({$agreement['id']});return false;" class="blue">{$agreement['title']}</a>》 </td>
+						</div>
+					</div>
+					<div class="form-actions" style="background-color: white;">
+  							<button type="submit" name="dosubmit" value="下一步" type="submit" class="btn btn-warning" style="margin-right: 30px;">下一步</button>
+ 						    <a class="btn" href="{buildurl('account_manage','index','member')}">上一步</a>
+						</div>
+			</fieldset>
+	     	</form>
+       		<!-- /contain -->
+        </div>
+        <!--/能力提供方-->
+        {elseif $_GET['modelid']==10}
+        <div class="register_step step2"></div>
+ 		<!--个人开发者-->
+        <div class="register_contain" >
+        	<!-- contain -->
+	        <form class="form-horizontal" method="post" action="{buildurl('register','','member')}" id="myform" onsubmit="return person_chck()">
+	        <fieldset class="regist_fieldset mt_30">
+	          <legend>基本信息<span>（带<strong>*</strong>号为必填项）</span></legend>
+					<div class="control-group">
+						<label class="control-label " for="focusedInput"> 注册类型：</label>
+								<div class="controls" style="padding-top:6px;color: #999999">
+								个人开发者
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="focusedInput"><font color="red">*</font>昵称：</label>
+						<div class="controls">
+							<input id="dev_name" class="input-xlarge focused" type="text" value="" name="username">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="focusedInput"><font color="red">*</font>E-Mail：</label>
+						<div class="controls">
+							<input id="email" class="input-xlarge focused" type="text" value=""  name="email">
+						</div>
+					</div>
+					<!-- <div class="control-group">
+						<label class="control-label" for="focusedInput">联系方式：</label>
+						<div class="controls">
+							<input id="phone" class="input-xlarge focused" type="text" value="" name="info[phone]">
+						</div>
+					</div> -->
+					<div class="control-group">
+						<label class="control-label" for="focusedInput">所在地区：</label>
+						<div class="controls">
+							{pc:member action="first_class" return="first_class"}
+								<select class="regist_sel" name="area_a" id="area_a">
+									<option value="">请选择省市</option>
+										{loop $first_class $f}
+									<option value="{$f['linkageid']}">{$f['name']}</option>
+										{/loop}
+								</select>
+								{/pc}
+								<select class="regist_sel" name="area_b" id="area_b" >
+									<option value="">请选择区市</option>
+								</select>
+								<select class="regist_sel" name="area_c" id="area_c" style="display:none;">
+									<option value="">请选择区县</option>
+								</select>
+								<input type="hidden" name="area" id="area" value=""/>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="focusedInput">获知来源：</label>
+						<div class="controls">
+						{$forminfos['knewfrom']['form']}
+						<input id="sub_from_name" class="input-xlarge focused" type="text" value=""  name="sub_from_name" style="display:none;" placeholder="请输入来源"/>
+						</div>
+						
+					</div>
+					
+					</fieldset>
+					<fieldset class="regist_fieldset mt_30">
+					<legend>身份认证信息<span>（以下内容需要审核，请如实填写）</span></legend>
+					<div class="control-group">
+						<label class="control-label" for="focusedInput"><font color="red">*</font>真实姓名：</label>
+						<div class="controls">
+							<input id="realname" class="input-xlarge focused" type="text" value=""  name="info[realname]">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="focusedInput"><font color="red">*</font>身份证号码：</label>
+						<div class="controls">
+							<input id="cert_number" class="input-xlarge focused" type="text" value="" name="info[cert_number]">
+						</div>
+					</div>
+					<div class="control-group" style="display:none;">
+						<label class="control-label" for="focusedInput"><font color="red">*</font>身份证类型：</label>
+						<div class="controls">
+							<select id="cert_type" name="info[cert_type]">
+							<option selected="" value="0">身份证</option>
+							</select>
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="focusedInput" style="margin-top:50px;"><font color="red">*</font> 身份证照片：</label>
+						<input type='hidden' name='info[cert_photo]' id='cert_photo' value="">
+						<div class="controls" id="cert_photo_preview">
+							<img class="cert_photo_upload" src="{APP_PATH}statics/v3/css/member/register/shenfz.gif" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="focusedInput"><font color="red">*</font>手机号码：</label>
+						<div class="controls">
+							<input id="phonenum" class="input-xlarge focused" type="text" value="" name="info[phonenum]">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="focusedInput"><font color=red>*</font>验证码：</label>
+						<div class="controls">
+						<input type="text" id="code" name="code" size="10" class="input-text" sytle="width:170px">
+								{form::checkcode('code_img', '4', '14', 80, 24)} &nbsp;<a id="refresh_code" style="cursor:default;">刷新</a>
+								<input type="hidden" name="checkcode" id="checkcode"/>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="focusedInput"></label>
+						<div class="controls">
+						<input type="hidden"  value="{$modelid}" name="modelid" />
+								<input type="checkbox" style="width: 20px; margin-top: 0px;" name="protocol" id="protocol" value="" onclick="check_protocol({$agreement['id']});">
+								我已阅读并接受《<a href="javascript:void(0);" onclick="show_protocol({$agreement['id']});return false;" class="blue">{$agreement['title']}</a>》 </td>
+						</div>
+					</div>
+					<div class="form-actions" style="background-color: white;">
+  							<button type="submit" class="btn btn-warning" name="dosubmit"  id="dosubmit" style="margin-right: 30px;">下一步</button>
+ 						    <a class="btn" href="{buildurl('account_manage','index','member')}">上一步</a>
+						</div>
+			</fieldset>
+	     	</form>
+        
+       		<!-- /contain -->
+        </div>
+		<!--/能力提供方-->
+		{/if}
+        </div>
+        </div>
+
+    <!-- main -->
+{template "public","footer","v3"}
+ 

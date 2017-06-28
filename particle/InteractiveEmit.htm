@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Interactive Emit</title>
+</head>
+<body>
+<script type="text/javascript" src="Framework.js"></script>
+<script type="text/javascript" src="Vector2.js"></script>
+<script type="text/javascript" src="Color.js"></script>
+<script type="text/javascript" src="Particle.js"></script>
+<script type="text/javascript" src="ParticleSystem.js"></script>
+<script type="text/javascript" src="ChamberBox.js"></script>
+<textarea id="code" rows="20" cols="100">
+var ps = new ParticleSystem();
+ps.effectors.push(new ChamberBox(0, 0, 400, 400));
+var dt = 0.01;
+var oldMousePosition = Vector2.zero, newMousePosition = Vector2.zero;
+
+function sampleDirection(angle1, angle2) {
+    var t = Math.random();
+    var theta = angle1 * t + angle2 * (1 - t);
+    return new Vector2(Math.cos(theta), Math.sin(theta));
+}
+
+function sampleColor(color1, color2) {
+    var t = Math.random();
+    return color1.multiply(t).add(color2.multiply(1 - t));
+}
+
+function sampleNumber(value1, value2) {
+    var t = Math.random();
+    return value1 * t + value2 * (1 - t);
+}
+
+function step() {
+    var velocity = newMousePosition.subtract(oldMousePosition).multiply(10);
+    velocity = velocity.add(sampleDirection(0, Math.PI * 2).multiply(20));    
+    var color = sampleColor(Color.red, Color.yellow);
+    var life = sampleNumber(1, 2);    
+    var size = sampleNumber(2, 4);
+    ps.emit(new Particle(newMousePosition, velocity, life, color, size));
+    oldMousePosition = newMousePosition;
+    
+    ps.simulate(dt);
+
+    ctx.fillStyle="rgba(0, 0, 0, 0.1)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    ps.render(ctx);
+}
+
+start("interactiveEmitCanvas", step);
+
+canvas.onmousemove = function(e) {
+    newMousePosition = new Vector2(e.offsetX, e.offsetY);
+}
+</textarea>
+<br />
+<button onclick="eval(document.getElementById('code').value)">Run</button>
+<button onclick="stop();">Stop</button>
+<br />
+<canvas id="interactiveEmitCanvas" width="400" height="400"></canvas>
+</body>
+</html>

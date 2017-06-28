@@ -1,0 +1,24 @@
+{
+    "name": "jquery-animate",
+    "title": "jquery-animate",
+    "description": "animate",
+    "version": "1.0.2",
+    "main": "dist/index.js",
+    "homepage": "http://www.alienjs.net",
+    "author": "zhongyi cai <274142680@qq.com>",
+    "repository": { },
+    "keywords": [
+        "animate",
+        "jquery",
+        "jquery-animate"
+    ],
+    "output" : [ "index.js","background.js","colors.js" ],
+    "dependencies": {
+        "jquery" : "^1.11.2"
+    },
+    "devDependencies": {
+
+    },
+    "scripts": {
+    }
+}

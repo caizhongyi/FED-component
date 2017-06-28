@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Basic Particle System</title>
+</head>
+<body>
+<script type="text/javascript" src="Framework.js"></script>
+<script type="text/javascript" src="Vector2.js"></script>
+<script type="text/javascript" src="Color.js"></script>
+<script type="text/javascript" src="Particle.js"></script>
+<script type="text/javascript" src="ParticleSystem.js"></script>
+<textarea id="code" rows="20" cols="100">
+var ps = new ParticleSystem();
+var dt = 0.01;
+
+function sampleDirection() {
+    var theta = Math.random() * 2 * Math.PI;
+    return new Vector2(Math.cos(theta), Math.sin(theta));
+}
+
+function step() {
+    ps.emit(new Particle(new Vector2(200, 200), sampleDirection().multiply(100), 1, Color.red, 5));
+    ps.simulate(dt);
+
+    clearCanvas();
+    ps.render(ctx);
+}
+
+start("basicParticleSystemCanvas", step);
+</textarea>
+<br />
+<button onclick="eval(document.getElementById('code').value)">Run</button>
+<button onclick="stop();">Stop</button>
+<br />
+<canvas id="basicParticleSystemCanvas" width="400" height="400"></canvas>
+</body>
+</html>

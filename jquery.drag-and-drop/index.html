@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>DragnDrop Demo - Onextrapixel</title>
+    <script type="text/javascript" src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.dragndrop.js"></script>
+    <link type="text/css" rel="stylesheet" href="css/style.css" />
+</head>
+<style>
+    .drag{position:absolute; float:left; left: 100px; top: 400px;  width:100px; height:100px; background:indigo; z-index:1}
+
+    #drop {
+        width: 200px;
+        height: 200px;
+        position: relative;
+        background: #eee;
+        border: 1px solid #999;
+        margin: 0 auto;
+    }
+</style>
+<body>
+<div class="drag"></div>
+
+<div id="drop" class="drop">
+    <div class="a"></div>
+    <div class="b"></div>
+    <div class="c"></div>
+    <div class="d"></div>
+</div>
+<script type="text/javascript" src="js/fn.js"></script>
+
+</body>
+</html>

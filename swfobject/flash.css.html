@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+
+<body>
+flash as3 读取css文件 使用CSS层级式样式表格式化动态文本
+
+
+    使用 StyleSheet 类可以创建包含文本格式设置规则（例如，字体大小、颜色和其它格式样式）的 StyleSheet 对象。 然后，可以将样式表定义的样式应用到包含 HTML 或 XML 格式文本的 TextField 对象。 根据 StyleSheet 对象定义的标签样式自动设置 TextField 对象中文本的格式。 可以使用文本样式来定义新的格式标签，重新定义内置的 HTML 标签，或创建可应用到某些 HTML 标签的样式类。 
+
+    若要对一个 TextField 对象应用样式，请将该 StyleSheet 对象赋给 TextField 对象的 styleSheet 属性。
+
+
+    注意：具有样式表的文本字段不可编辑。 也就是说，type 属性设置为 TextFieldType.INPUT 的文本字段会对文本字段的默认文本应用样式表，但用户不再能编辑该内容。 考虑使用 TextFormat 类将样式分配给输入文本字段。
+
+
+    Flash Player 支持原 CSS1 规范 (www.w3.org/TR/REC-CSS1) 中的部分属性。 下表显示受支持的层叠样式表 (CSS) 属性和值，及其相应的 ActionScript 属性名称。 （每个 ActionScript 属性名称都是从对应的 CSS 属性名称派生的；如果名称中包含连字符，请省略连字符并将连字符后的字符变成大写。）
+
+
+
+ CSS 属性  ActionScript 属性  用法和支持的值 
+color color 只支持十六进制颜色值。 不支持具有指定名称的颜色（例如 blue）。 颜色以下面的格式写入：#FF0000。 
+display  display  受支持的值为 inline、block 和 none。  
+font-family fontFamily 用逗号分隔的供使用字体的列表，根据需要按降序排列。 可以使用任何字体系列名称。 如果您指定通用字体名称，它将转换为相应的设备字体。 支持以下字体转换：mono 转换为 _typewriter，sans-serif 转换为 _sans，serif 转换为 _serif。  
+font-size  fontSize 只使用该值的数字部分。 不分析单位（px、pt）；像素和磅是等价的。  
+font-style  fontStyle  可识别的值为 normal 和 italic。  
+font-weight fontWeight 可识别的值为 normal 和 bold。 
+kerning  kerning  可识别的值为 true 和 false。 仅嵌入字体支持字距调整。 某些字体（如 Courier New）不支持字距调整。 只有 Windows 中创建的 SWF 文件支持 kerning 属性，而 Macintosh 中创建的 SWF 文件不支持该属性。 但是，这些 SWF 文件可以在 Flash Player 的非 Windows 版本中播放，并且仍可以应用字距调整。  
+leading  leading 两行之间统一分布的距离。 该值指定在每行之后添加的像素数。 负值将压缩两行之间的距离。 只使用该值的数字部分。 不分析单位（px、pt）；像素和磅是等价的。  
+letter-spacing letterSpacing 两个字符之间统一分布的距离。 该值指定在每个字符之后添加的像素数。 负值将压缩两个字符之间的距离。 只使用该值的数字部分。 不分析单位（px、pt）；像素和磅是等价的。  
+margin-left marginLeft	  只使用该值的数字部分。 不分析单位（px、pt）；像素和磅是等价的。   
+margin-right marginRight 只使用该值的数字部分。 不分析单位（px、pt）；像素和磅是等价的。   
+text-align textAlign 可识别的值为 left、center、right 和 justify。  
+text-decoration textDecoration  可识别的值为 none 和 underline。  
+text-indent textIndent
+ 只使用该值的数字部分。 不分析单位（px、pt）；像素和磅是等价的。   
+
+
+
+案例说明：
+
+（一）、flash as3 内部定义 css 样式：
+
+
+import flash.text.StyleSheet;
+
+import flash.events.Event;
+
+import flash.text.TextField;
+
+import flash.net.URLRequest;
+
+import flash.net.navigateToURL;
+
+import flash.events.TextEvent;
+
+	
+
+var myHTMLText:String = "<a href='event:dream798'>欢迎光临梦想798/dream798  这里免费下载flash as特效案例及相关知识积累</a>";
+
+var myCSS:StyleSheet = new StyleSheet();
+
+myCSS.setStyle("a:link", {color:'#FFCC00',textDecoration:'none'});
+
+myCSS.setStyle("a:hover", {color:'#FFFFFF',textDecoration:'underline'});
+
+myHTML.styleSheet = myCSS;
+
+myHTML.selectable = false;
+
+myHTML.htmlText = myHTMLText;
+
+myHTML.addEventListener(TextEvent.LINK, linkHandler);
+
+ 
+
+function linkHandler(linkEvent:TextEvent):void {
+
+	switch (linkEvent.text) {
+
+		case "dream798" :
+
+			navigateToURL(new URLRequest('http://www.dream798.com'),'_blank');
+
+			break;
+
+		default :
+
+			break;
+
+	}
+
+}
+
+
+
+
+
+
+
+（二）、flash as3 外部加载 .css 文件：
+
+
+先定义.css文件
+
+a:link{
+
+	color:#FF9900;
+
+	text-decoration:underline;
+
+}
+
+a:hover{
+
+	color:#ffffff;
+
+	text-decoration:none;
+
+}
+
+p{
+
+	color:#FFF000;
+
+}
+
+.title{
+
+	color:#FFF000;
+
+}
+
+然后在AS中加载.css文件进行分析
+
+public class  TextSetCss extends MovieClip
+
+{
+
+	private var cssReq:URLRequest
+
+	private var cssLoader:URLLoader;
+
+	public function TextSetCss() {
+
+			
+
+		cssLoader = new URLLoader;
+
+		cssReq = new URLRequest("mystyle.css");
+
+		cssLoader.addEventListener(Event.COMPLETE, cssLoaded);
+
+		cssLoader.load(cssReq);
+
+		my_txt.htmlText = '<p><span class="title">欢迎光临梦想798/dream798</span></p><p>这里免费下载flash as特效案例及相关知识积累</p><p><a href="http://www.dream798." target="_blank">http://www.dream798. </a></p>';
+
+	}
+
+	private function cssLoaded(event:Event):void {			
+
+		var sheet:StyleSheet = new StyleSheet;
+
+		sheet.parseCSS(cssLoader.data);
+
+		my_txt.styleSheet = sheet;
+
+	}
+
+}
+
+
+</body>
+</html>

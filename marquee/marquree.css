@@ -1,0 +1,33 @@
+.marquee, .marquee-list {
+    overflow: hidden;
+}
+
+.marquee {
+    width: 400px;
+    margin: 0 auto;
+}
+
+.marquee-list {
+    width: 1000%;
+    height: auto !important;
+}
+
+.marquee li {
+    float: left;
+    width: 100px;
+}
+
+.marquee-vertical, .marquee.vertical {
+    overflow: hidden;
+    height: 25px;
+    width: auto;
+}
+
+.marquee-vertical li, .marquee.vertical li {
+    float: none;
+    width: auto;
+}
+
+.marquee-vertical .marquee-list, .marquee.vertical .marquee-list {
+    width: auto;
+}

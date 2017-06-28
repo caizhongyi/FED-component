@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+	<script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+
+    <script type="text/javascript" src="jquery.stickyboxes.js"></script>
+    <script type="text/javascript">
+                $(document).ready(
+					function () {
+					  $('.stickbox').stickySidebar({
+						speed: 400, 
+						padding: 30,
+					//	easing: "easeInOutQuad",
+						constrain: true
+					});	
+				 });
+				// 當 .remove 鏈結點擊時, 移除指定區塊的 stickySidebar 效果
+				$(".remove").click(function (ev) {
+					$("#" + this.rel).stickySidebar("remove");
+					return false;
+				});
+		
+				// 移除全部區塊的 stickySidebar 效果
+				$("#destroyAll").click(function (ev) {
+					$(".stickybox").stickySidebar("destroy");
+					return false;
+				});
+
+     </script>
+	 <style type="text/css"> 
+	    .open{ border:1px dashed #ddd; padding:10px; margin:10px; display:inline-block;}
+	    .tips1{width:100px; height:100px; background-color:#999;left:120px; }
+	 </style>
+</head>
+<body  style="overflow:scroll">
+<div>
+<div class="stickbox" style="width:100px; height:100px;  background-color:Red; margin:40px;">
+</div>
+
+<div style=" float:right; border:1px solid #ccc; margin:20px;width:200px; height:500px; position:relative;">
+<div class="stickbox" style="width:100px; height:100px; background-color:blue; margin:40px;">
+</div>
+
+
+</div>
+
+<div class="center"><a href="jquery.stickyboxs.htm"  target="_blank" class="open">在新窗口中打开</a></div>
+<div class="clear"></div>
+
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+</div>
+
+
+</body>
+</html>

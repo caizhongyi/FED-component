@@ -1,0 +1,30 @@
+{
+  "name": "jquery-plus",
+  "version": "1.0.0",
+  "description": "jquery plus",
+  "author": "Zhongyi Cai <274142680@qq.com>",
+  "homepage": "http://www.alienjs.net",
+    "repository": {
+        "type": "git",
+        "url":""
+    },
+    "bugs": {
+        "url": ""
+    },
+    "licenses": "MIT",
+  "dependencies": {
+    "jquery": ">=1.9.0"
+  },
+  "spm": {
+    "buildArgs":"--ignore jquery",
+    "main": "index",
+    "output": [
+    ],
+    "dependencies": {
+
+    },
+    "devDependencies": {
+
+    }
+  }
+}

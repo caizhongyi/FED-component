@@ -1,0 +1,10 @@
+/*
+    base style
+    如果需要更多样式风格请使用 zero.css
+ */
+.fade{ visibility: hidden;}
+.fade.in{opacity: 1; }
+.in{ visibility: inherit !important;}
+
+.modedit-block{ border: 1px dashed transparent;}
+.modedit-block.in,.modedit-block:hover{ border: 1px solid #fa910a; background: #f7d590; }

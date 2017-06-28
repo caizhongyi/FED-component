@@ -1,0 +1,257 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="keywords" content="注册向导，滚动，表单，jquery" />
+<meta name="description" content="Helloweba演示平台，演示XHTML、CSS、jquery、PHP案例和示例" />
+<title>jQuery+PHP+Mysql在线拍照和在线浏览照片</title>
+<link rel="stylesheet" type="text/css" href="../css/main.css" />
+<style type="text/css">
+#camera{width:598px; height:525px; position:fixed; bottom:-466px; left:50%; margin-left:-300px; border:1px solid #f0f0f0; background:url(images/cam_bg.jpg) repeat-y; -moz-border-radius:4px 4px 0 0; -webkit-border-radius:4px 4px 0 0; border-radius:4px 4px 0 0; -moz-box-shadow:0 0 4px rgba(0,0,0,0.6); -webkit-box-shadow:0 0 4px rgba(0,0,0,0.6); box-shadow:0 0 4px rgba(0,0,0,0.6);}
+#cam{width:100%; height:66px; display:block; position:absolute; top:0; left:0; background:url(images/cam.png) no-repeat center center; cursor:pointer}
+#webcam{width:520px; height:370px; margin:66px auto 22px; line-height:360px; background:#ccc; color:#666; text-align:center}
+.button_pane{text-align:center;}
+.btn_blue,.btn_green{width:99px; height:38px; line-height:32px; margin:0 4px; border:none; display:inline-block; text-align:center; font-size:14px; color:#fff !important; text-shadow:1px 1px 1px #277c9b; background:url(images/buttons.png) no-repeat}
+.btn_green{background:url(images/buttons.png) no-repeat right top;text-shadow:1px 1px 1px #498917;}
+.hidden{display:none}
+
+#photos{width:80%; margin:40px auto}
+#photos:hover a{opacity:0.5}
+#photos a:hover{opacity:1}
+</style>
+</head>
+
+<body>
+<div id="header">
+   <div id="logo"><h1><a href="http://www.helloweba.com" title="返回helloweba首页">helloweba</a></h1></div>
+</div>
+
+<div id="main" style="width:90%">
+   <h2 class="top_title"><a href="http://www.helloweba.com/view-blog-179.html">jQuery+PHP+Mysql在线拍照和在线浏览照片</a></h2>
+   <div id="photos"></div>
+   
+   <div id="camera">
+       <div id="cam"></div>
+       <div id="webcam"></div>
+       <div id="buttons">
+    	  <div class="button_pane" id="shoot">
+        	<a id="btn_shoot" href="" class="btn_blue">拍照</a>
+          </div>
+          <div class="button_pane hidden" id="upload">
+        	<a id="btn_cancel" href="" class="btn_blue">取消</a> <a id="btn_upload" href="" class="btn_green">上传</a>
+          </div>
+       </div>
+   </div>
+   
+</div>
+<div id="footer">
+    <p>Powered by helloweba.com  允许转载、修改和使用本站的DEMO，但请注明出处：<a href="http://www.helloweba.com">www.helloweba.com</a>
+    <a href="http://www.helloweba.com/view-blog-179.html">http://www.helloweba.com/view-blog-179.html</a></p>
+</div>
+<link rel="stylesheet" type="text/css" href="fancybox/jquery.fancybox-1.3.4.css" />
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.easing.js"></script>
+<script type="text/javascript" src="fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+<script type="text/javascript" src="js/webcam.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
+
+
+<p id="stat"><script type="text/javascript" src="http://js.tongji.linezing.com/1870888/tongji.js"></script></p>
+
+
+<pre>
+jQuery
+
+这一切的交互动作所需的js我们都写在script.js文件中。首先，我们需要加载摄像头组件webcam.js，关于webcam的调用，可以看下本站文章：Javascript+PHP实现在线拍照功能。调用方法如下：
+
+script.js-Part 1
+
+$(function(){ 
+    webcam.set_swf_url('js/webcam.swf'); //载入flash摄像组件的路径 
+    webcam.set_api_url('upload.php');    // 上传照片的PHP后端处理文件 
+    webcam.set_quality(80);                // 设置图像质量 
+    webcam.set_shutter_sound(true, 'js/shutter.mp3'); //设置拍照声音，拍照时会发出“咔嚓”声 
+ 
+    var cam = $("#webcam"); 
+    cam.html( 
+        webcam.get_html(cam.width(), cam.height())  //在#webcam中载入摄像组件 
+    ); 
+
+这时，还看不到载入摄像头效果，因为#camera默认是折叠的，继续在script.js中加入以下代码：
+
+script.js-Part 2
+
+var camera = $("#camera"); 
+var shown = false; 
+$('#cam').click(function(){ 
+         
+    if(shown){ 
+        camera.animate({ 
+            bottom:-466 
+        }); 
+    }else { 
+        camera.animate({ 
+            bottom:-5 
+        }); 
+    } 
+         
+    shown = !shown; 
+}); 
+
+当单击页面正下方的摄像头按钮时，默认折叠的摄像区会向上展开，这时如果您的机器安装有摄像头，则会加载摄像组件进行摄像了。
+
+接下来，通过单击“拍照”完成拍照功能，单击“取消”则取消刚刚所拍的照片，单击“上传”则将所拍的照片上传到服务器。
+
+script.js-Part 3
+
+//拍照 
+$("#btn_shoot").click(function(){ 
+    webcam.freeze();  //冻结webcam，摄像头停止工作 
+    $("#shoot").hide(); //隐藏拍照按钮 
+    $("#upload").show(); //显示取消和上传按钮 
+    return false; 
+}); 
+ 
+//取消拍照 
+$('#btn_cancel').click(function(){ 
+    webcam.reset();  //重置webcam，摄像头重新工作 
+    $("#shoot").show(); //显示拍照按钮 
+    $("#upload").hide(); //隐藏取消和上传按钮 
+    return false; 
+}); 
+ 
+//上传照片 
+$('#btn_upload').click(function(){ 
+    webcam.upload(); //上传 
+    webcam.reset();//重置webcam，摄像头重新工作 
+    $("#shoot").show();//显示拍照按钮 
+    $("#upload").hide(); //隐藏取消和上传按钮 
+    return false; 
+}); 
+
+点击“上传”按钮后，所拍的照片会提交给后台PHP处理，PHP将照片进行命名和存盘入库操作，请看PHP是如何操作上传照片的。
+PHP
+
+upload.php所做的事情有：获取上传的照片，命名，判断是否合法的图片，生成缩略图，存盘，写入数据库，返回JSON信息给前端。
+
+$folder = 'uploads/'; //上传照片保存路径 
+$filename = date('YmdHis').rand().'.jpg';  //命名照片名称 
+$original = $folder.$filename; 
+ 
+$input = file_get_contents('php://input'); 
+if(md5($input) == '7d4df9cc423720b7f1f3d672b89362be'){ 
+    exit;   //如果上传的是空白的照片，则终止程序 
+} 
+$result = file_put_contents($original, $input); 
+if (!$result) { 
+    echo '{"error":1,"message":"文件目录不可写";}'; 
+    exit; 
+} 
+ 
+$info = getimagesize($original); 
+if($info['mime'] != 'image/jpeg'){ //如果类型不是图片，则删除 
+    unlink($original); 
+    exit; 
+} 
+ 
+ 
+//生成缩略图 
+$origImage = imagecreatefromjpeg($original); 
+$newImage = imagecreatetruecolor(154,110);  //缩略图尺寸154x110 
+imagecopyresampled($newImage,$origImage,0,0,0,0,154,110,520,370);  
+imagejpeg($newImage,'uploads/small_'.$filename); 
+ 
+//写入数据库 
+include_once('connect.php'); 
+$time = mktime(); 
+$sql = "insert into photobooth (pic,uploadtime)values('$filename','$time')"; 
+$res = mysql_query($sql); 
+if($res){ 
+    //输出JSON信息 
+    echo '{"status":1,"message":"Success!","filename":"'.$filename.'"}'; 
+}else{ 
+    echo '{"error":1,"message":"Sorry,something goes wrong.";}'; 
+} 
+
+upload.php完成照片上传后，最终会返回json格式的数据给前端摄像组件webcam调用，现在我们回到script.js。
+jQuery
+
+webcam通过set_hook方法捕捉到后台php返回信息，onComplete表示上传完成，onError则表示错做出错了。
+
+script.js-Part 4
+
+webcam.set_hook('onComplete', function(msg){ 
+    msg = $.parseJSON(msg); //解析json 
+         
+    if(msg.error){ 
+        alert(msg.message); 
+    } 
+    else { 
+        var pic = '<a rel="group" href="uploads/'+msg.filename+'"><img src="uploads/small_msg.filename+'"></a>'; 
+        $("#photos").prepend(pic); //将获取的照片信息插入到index.html的#photo里 
+        initFancyBox();  //调用fancybox插件 
+    } 
+}); 
+ 
+webcam.set_hook('onError',function(e){ 
+    cam.html(e); 
+}); 
+ 
+//调用fancybox 
+function initFancyBox(){ 
+    $("a[rel=group]").fancybox({ 
+        'transitionIn'    : 'elastic', 
+        'transitionOut'    : 'elastic', 
+        'cyclic'        : true 
+    }); 
+} 
+
+说明一下，上传成功后，所拍的照片会通过以上js代码动态的插入到元素#photos里，并且同时调用fancybox插件。这时，点击刚刚上传的照片，会呈现fancybox弹出层效果。注意动态生成的元素必须通过以上代码中的initFancyBox()函数来调用fancybox，而不能直接通过fancybox()来调用，否则将不会有弹出层效果。
+
+接下来，script.js还需要做一件事就是：动态载入最新的照片，展示在页面上，我们通过jquery的.getJSON()方法来完成ajax请求。
+
+script.js-Part 5
+
+function loadpic(){ 
+    $.getJSON("getpic.php",function(json){ 
+        if(json){ 
+           $.each(json,function(index,array){ //循环json数据 
+               var pic = '<a rel="group" href="uploads/'+array['pic']+'"> 
+               <img src="uploads/small_'+array['pic']+'"></a>'; 
+               $("#photos").prepend(pic);  
+           });  
+        } 
+        initFancyBox(); //调用fancybox插件 
+    }); 
+} 
+ 
+loadpic(); 
+
+函数loadpic()向服务器getpic.php发送get请求，并将返回的json数据进行解析，将照片信息动态插入到元素#photos下，并调用fancybox插件，然后，别忘了在页面载入后调用loadpic()。
+PHP
+
+最后，由后台getpic.php来获取数据库中的上传图片并且返回json给前端。
+
+include_once("connect.php"); //连接数据库 
+//查询数据表中最新的50条记录 
+$query = mysql_query("select pic from photobooth order by id desc limit 50"); 
+while($row=mysql_fetch_array($query)){ 
+    $arr[] = array( 
+       'pic' => $row['pic'] 
+    ); 
+} 
+//输出json数据 
+echo json_encode($arr); 
+
+最后，附上数据photobooth结构：
+
+CREATE TABLE `photobooth` ( 
+  `id` int(11) NOT NULL auto_increment, 
+  `pic` varchar(50) NOT NULL, 
+  `uploadtime` int(10) NOT NULL, 
+  PRIMARY KEY  (`id`) 
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8; 
+
+</pre>
+</body>
+</html>

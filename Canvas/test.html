@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <meta charset="utf-8">
+    <!--<meta content="IE=EmulateIE7" http-equiv="X-UA-Compatible" />-->
+    <meta name="keywords" content="keywords"/>
+    <meta name="description" content="description"/>
+    <meta http-equiv="Window-target" content="_top"/>
+    <!-- author  -->
+    <meta name="author" content=""/>
+    <!-- copyright  -->
+    <meta name="copyright" content="2001-2010 Comsenz Inc."/>
+    <!-- 文章标签  -->
+    <link rel="Bookmark" href="favicon.ico"/>
+    <!-- 网站url icon  -->
+    <link rel="Shortcut Icon" href="favicon.ico" type="image/x-icon"/>
+
+    <script type="text/javascript" src="js/jquery-1.9.0.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" media="all" href="component/bootstrap/bootstrap.css"/>
+    <script type="text/javascript" src="component/bootstrap/bootstrap.js"></script>
+
+    <link rel="stylesheet" type="text/css" media="all" href="css/layout.min.css"/>
+
+</head>
+<body>
+<canvas id="canvas"  width="600" height="600">
+    your browser not support
+</canvas>
+<script type="text/javascript">
+    window.onload = function() {
+        var canvas =document.getElementById("canvas");
+        var context2D =canvas.getContext("2d");
+
+        context2D.font ="30px Times New Roman";
+        context2D.fillText("HelloCanvas!", 10, 35);
+
+        //绘制相交的线段
+        context2D.beginPath();
+        context2D.moveTo(50,50);    //指定一条线段的起点
+        context2D.lineTo(100,100);     //指定一条线段的终点
+        context2D.moveTo(200,50);
+        context2D.lineTo(200,100);
+        context2D.stroke();
+
+        //绘制与这两条线段相切的红色圆弧
+        context2D.beginPath();    //清除之前的路径并提醒Context开始绘制一条新的路径，否则当调用stroke()方法的时候会绘制之前所有的路径
+        context2D.strokeStyle= "#ff0000";
+        context2D.moveTo(50,50);
+        context2D.arcTo(100,100, 200, 50, 100);  //很明显，这里的参数不好设置……
+        context2D.stroke();
+
+        //绘制一个蓝色的圆
+        context2D.beginPath();
+        context2D.strokeStyle= "#ff0000";
+        context2D.arc(100,250, 100, 20, Math.PI*2 , false);    //注意这里的参数是弧度制，而不是角度制
+        context2D.stroke();
+        //将上面的圆填充为灰色
+        context2D.fillStyle ="#a3a3a3";
+        context2D.fill();
+        //在上面的圆中剪辑一个圆形方形区域
+        context2D.beginPath();
+        context2D.rect(250,200, 100, 100);
+        context2D.clip();    //这个方法确实很土，需要借助于默认的矩形或者制定的矩形，而不能自定义矩形
+        //在剪辑区域中填充一个大于该区域尺寸的矩形
+        context2D.fillStyle ="yellow";
+        context2D.fill();
+    }
+</script>
+</body>
+</html>

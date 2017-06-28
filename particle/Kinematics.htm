@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Kinematics</title>
+</head>
+<body>
+<script type="text/javascript" src="Framework.js"></script>
+<script type="text/javascript" src="Vector2.js"></script>
+<textarea id="code" rows="20" cols="100">
+var position = new Vector2(10, 200);
+var velocity = new Vector2(50, -50);
+var acceleration = new Vector2(0, 10);
+var dt = 0.1;
+
+function step() {
+    position = position.add(velocity.multiply(dt));
+    velocity = velocity.add(acceleration.multiply(dt));
+
+    ctx.strokeStyle = "#000000";
+    ctx.fillStyle = "#FFFFFF";
+    ctx.beginPath();
+    ctx.arc(position.x, position.y, 5, 0, Math.PI*2, true); 
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+}
+    
+start("kinematicsCancas", step);
+</textarea>
+<br />
+<button onclick="eval(document.getElementById('code').value)">Run</button>
+<button onclick="stop();">Stop</button>
+<button onclick="clearCanvas();">Clear</button>
+<br />
+<canvas id="kinematicsCancas" width="400" height="400"></canvas>
+</body>
+</html>

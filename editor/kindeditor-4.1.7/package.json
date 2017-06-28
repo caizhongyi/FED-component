@@ -1,0 +1,19 @@
+{
+  "name": "kindeditor",
+  "version": "4.1.7",
+  "description": "kindeditor 富文本编辑",
+  "main": "kindeditor-all-min.js",
+  "homepage": "http://www.alienjs.net",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": ""
+  },
+  "keywords": [
+    "kindeditor",
+    "editor"
+  ],
+  "author": "",
+  "license": "ISC"
+}

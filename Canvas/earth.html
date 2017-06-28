@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <meta charset="utf-8">
+    <!--<meta content="IE=EmulateIE7" http-equiv="X-UA-Compatible" />-->
+    <meta name="keywords" content="keywords"/>
+    <meta name="description" content="description"/>
+    <meta http-equiv="Window-target" content="_top"/>
+    <!-- author  -->
+    <meta name="author" content=""/>
+    <!-- copyright  -->
+    <meta name="copyright" content="2001-2010 Comsenz Inc."/>
+    <!-- 文章标签  -->
+    <link rel="Bookmark" href="favicon.ico"/>
+    <!-- 网站url icon  -->
+    <link rel="Shortcut Icon" href="favicon.ico" type="image/x-icon"/>
+
+    <script type="text/javascript" src="js/jquery-1.9.0.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" media="all" href="component/bootstrap/bootstrap.css"/>
+    <script type="text/javascript" src="component/bootstrap/bootstrap.js"></script>
+
+    <link rel="stylesheet" type="text/css" media="all" href="css/layout.min.css"/>
+
+</head>
+<body>
+<canvas id="canvas" width="600" height="600"></canvas>
+<script type="text/javascript">
+    var sun = new Image();
+    var moon = new Image();
+    var earth = new Image();
+
+    function init(){
+        sun.src = 'images/sun.png';
+        moon.src = 'images/moon.png';
+        earth.src = 'images/earth.png';
+        setInterval(draw,100);
+    }
+
+    function draw() {
+        var ctx = document.getElementById('canvas').getContext('2d');
+        ctx.globalCompositeOperation = 'destination-over';
+        ctx.clearRect(0,0,600,600); // 清除canvas
+
+        ctx.fillStyle = 'rgba(0,0,0,0.4)';
+        ctx.strokeStyle = 'rgba(0,153,255,0.4)';
+        ctx.save();
+        ctx.translate(150,150);
+
+        // 地球
+        var time = new Date();
+        ctx.rotate( ((2*Math.PI)/60)*time.getSeconds() +
+                ((2*Math.PI)/60000)*time.getMilliseconds() );
+        ctx.beginPath();
+        ctx.arc(300,300, 100, 20, Math.PI*2 , false);    //注意这里的参数是弧度制，而不是角度制
+        ctx.stroke();
+        ctx.translate(105,0);
+      /*  ctx.fillRect(0,-12,50,24); // 阴影
+        ctx.drawImage(earth,-12,-12);
+
+
+        // 月球
+        ctx.save();
+        ctx.rotate( ((2*Math.PI)/6)*time.getSeconds() +
+                ((2*Math.PI)/6000)*time.getMilliseconds() );
+        ctx.translate(0,28.5);
+        ctx.drawImage(moon,-3.5,-3.5);
+        ctx.restore();
+        ctx.beginPath();
+        ctx.arc(150,150,105,0,Math.PI*2,false); // 地球轨道
+        ctx.stroke();
+        ctx.drawImage(sun,0,0,300,300);*/
+    }
+    init();
+</script>
+
+</body>
+</html>

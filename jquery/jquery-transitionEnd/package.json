@@ -1,0 +1,22 @@
+{
+    "name": "jquery-transitionEnd",
+    "title": "jquery-transitionEnd",
+    "description": "CSS动画结束事件",
+    "version": "1.0.0",
+    "main": "dist/index.js",
+    "homepage": "http://www.alienjs.net",
+    "author": "zhongyi cai <274142680@qq.com>",
+    "repository": {},
+    "keywords": [
+        "jquery-transitionEnd",
+        "transitionEnd"
+    ],
+    "bugs": { },
+    "licenses": [],
+    "output" : [ "index.js" ],
+    "dependencies": {
+        "jquery" : "^1.11.2"
+    },
+    "devDependencies": {},
+    "scripts": {}
+}

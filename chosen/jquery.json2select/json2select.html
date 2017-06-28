@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<script type="text/javascript" src="jquery-latest.js"></script>
+<script type="text/javascript" src="jquery.json2-area.js"></script>
+<script type="text/javascript" src="jquery.json2select.js"></script>
+<style type="text/css">
+	#selectt select{ margin:10px;}
+</style>
+</head>
+
+<body>
+<div id="selectt"></div>
+<script type="text/javascript">
+	<!--
+//构建如下json，t为列表框的text,v为列表框的value，s表示子一级对象
+var json=[
+	{
+		t:"欧洲某地",
+		v:"欧洲"
+	},
+	{
+		t:"中国某地",
+		v:"中国",
+		s:[
+			{
+				t:"上海",
+				v:"上海"
+			},
+			{
+				t:"云南某地",
+				v:"云南",
+				s:[
+					{
+						t:"大理",
+						v:"大理"
+					}
+				]
+			}
+		]
+	},
+	{
+		t:"日本某地",
+		v:"日本",
+		s:[
+			{
+				t:"东京",
+				v:"东京"
+			},
+			{
+				t:"北海道",
+				v:"北海道",
+				s:[
+					{
+						t:"北海道的某个地方",
+						v:"北海道的某个地方"
+					}
+				]
+			}
+		]
+	}
+];
+//调用即可
+$("#selectt").json2select(areaJson, [ '福建省' , '福州市' , '鼓楼区'] , 'areas' , 0);
+</script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>jQuery全屏响应式轮播图插件 JqueryReslider - 脚本特效素材之家(www.jiaoben123.com)</title>
+<meta charset="UTF-8">
+<meta name=description content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<link href="assets/css/main.css" rel="stylesheet" media="screen"/>
+</head>
+<body>
+<div class="wrap wrap-index">
+  <!-- slider-->
+  <div class="slider">
+    <div class="jquery-reslider">
+      <div class="slider-block" data-url="images/banner1.jpg"></div>
+      <div class="slider-block" data-url="images/banner2.jpg"></div>
+      <div class="slider-block" data-url="images/banner3.jpg"></div>
+      <div class="slider-direction slider-direction-next"></div>
+      <div class="slider-direction slider-direction-prev"></div>
+      <div class="slider-dots">
+        <ul>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- end build--> 
+</div>
+<!-- jQuery --> 
+<script src="assets/js/jquery.min.js"></script> 
+<!-- Client JavaScript --> 
+<script src="assets/js/jquery.reslider.js"></script> 
+<script>
+	$(function(){
+		$('.jquery-reslider').reSlider({
+			speed:1000,//设置轮播的高度
+			delay:5000,//设置轮播的延迟时间
+			imgCount:3,//设置轮播的图片数
+			dots:true,//设置轮播的序号点
+			autoPlay:true//设置轮播是否自动播放
+		});
+	});
+</script> 
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="jquery.fancybox.css"/>
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="jquery.fancybox.pack.js"></script>
+</head>
+<body>
+可选 - 如果需要支持鼠标滚轮滚动效果你还需要引入以下脚本
+
+<script type="text/javascript" src="/fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
+
+2、添加样式表文件
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox-1.3.4.css" type="text/css" media="screen">
+
+3、在页面上创建链接元素
+<br/>
+A、图片元素
+
+<a id="single_image" href="http://img02.tooopen.com/images/20150227/tooopen_sl_111442962633.jpg"><img src="http://img02.tooopen.com/images/20150227/tooopen_sl_111442962633.jpg" kesrc="http://img02.tooopen.com/images/20150227/tooopen_sl_111442962633.jpg" alt=""></a>
+<br/>
+B、普通文本
+
+<a id="inline" href="#data" kesrc="#data">This shows content of element who has id="data"</a>
+
+<div style="display: none;">
+    <div id="data">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+</div>
+<br/>
+C、Iframe
+
+<a href="http://www.example?iframe">This goes to iframe</a>
+
+或者
+<br/>
+<a class="iframe" href="http://www.example">This goes to iframe</a>
+<br/>
+D、Ajax
+
+<a href="http://www.example/data.php">This takes content using ajax</a>
+<script>
+   // 如果你要显示描述信息，可以在链接上加上title，将描述信息放到title中。
+
+    $(document).ready(function() {
+
+        /* 最基本的，使用了默认配置 */
+
+        $("a#single_image").fancybox();
+
+        /* 使用了自定义配置 */
+
+        $("a#inline").fancybox({
+            'hideOnContentClick': true
+        });
+
+        /* 一下配置支持组播放 */
+
+        $("a.group").fancybox({
+            'transitionIn'  :   'elastic',
+            'transitionOut' :   'elastic',
+            'speedIn'       :   600,
+            'speedOut'      :   200,
+            'overlayShow'   :   false
+        });
+
+    });
+</script>
+
+
+用rel标签来创建相册
+
+<a class="grouped_elements" rel="group1" href="http://img02.tooopen.com/images/20150227/tooopen_sl_111442962633.jpg"><img src="http://img02.tooopen.com/images/20150227/tooopen_sl_111442962633.jpg" alt=""></a>
+<a class="grouped_elements" rel="group1" href="http://img02.tooopen.com/images/20150227/tooopen_sl_111442962633.jpg"><img src="http://img02.tooopen.com/images/20150227/tooopen_sl_111442962633.jpg" alt=""></a>
+<br/>
+<a class="grouped_elements" rel="group2" href="http://img02.tooopen.com/images/20150227/tooopen_sl_111442962633.jpg"><img src="http://img02.tooopen.com/images/20150227/tooopen_sl_111442962633.jpg" alt=""></a>
+<a class="grouped_elements" rel="group2" href="http://img02.tooopen.com/images/20150227/tooopen_sl_111442962633.jpg"><img src="http://img02.tooopen.com/images/20150227/tooopen_sl_111442962633.jpg" alt=""></a>
+
+<script>
+    $("a.grouped_elements").fancybox();
+</script>
+</body>
+</html>

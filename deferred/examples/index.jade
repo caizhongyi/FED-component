@@ -1,0 +1,42 @@
+doctype
+html(lang="zh-cn")
+    head
+        title
+        meta(charset="utf-8")
+
+        script( src = '../../jquery/dist/jquery.js')
+        script( src = '../../alienjs-date/src/index.js')
+        script( src = '../src/index.js')
+        block css
+    body
+        block js
+        script.
+            $(function () {
+                //Deferred.when( , , ,).done();
+
+                var func = function(){
+                    var d = Deferred();
+                    function a() {
+                        d.resolveWith({name: 'name'}, ['resolved']);
+                       // d.rejectWith({name: 'name'}, ['resolved']);
+                        console.log('over!')
+                    }
+
+                    setTimeout(a, 1000);
+                    // Set object as a promise
+                    return d.promise(func);
+                }
+
+                func().done(function( e , a ){
+                    console.log(this)
+                    console.log(e)
+                    console.log(a)
+                }).fail(function( e , a ){
+                })
+
+                Deferred.when(func()).done(function( e , a ){
+                    console.log('when')
+                })
+            })
+
+
