@@ -1,30 +1,38 @@
-
-
-var MLottery = function(selector , options){
-    this.init.call(this,selector , options)
-}
-
-MLottery.prototype = {
-    init : function( selector , options ){
+//import  $ from  'jquery';
+import  aa from  './1';
+declare var $;
+//è·‘é©¬ç¯æœ¨
+export default class Lottery {
+    options = {
+        result  : {},
+        callback  : function(){}
+    };
+    $ ;
+    index = 0;//å½“å‰äº®åŒºä½ç½®
+    prevIndex = 0;  //å‰ä¸€ä½ç½®
+    speed = 300;//åˆå§‹é€Ÿåº¦
+    endIndex ; //å†³å®šåœ¨å“ªä¸€æ ¼å˜æ…¢
+    tb  ;
+    arr ;
+    cycle = 0;//è½¬åŠ¨åœˆæ•°
+    endCycle = 0;//è®¡ç®—åœˆæ•°
+    flag = false;  //ç»“æŸè½¬åŠ¨æ ‡å¿—
+    quick = 0;  //ç»“æŸè½¬åŠ¨æ ‡å¿—
+    $btn ;
+    time : number;
+    constructor( selector , options = {}){
+        new aa();
         var _this = this;
         this.options = $.extend( {} , {
             result : 4,
             callback : null
         }  , options)
         this.$ = $(selector);
-        this.index = 0 ;//µ±Ç°ÁÁÇøÎ»ÖÃ
-        this.prevIndex = 0 ; //Ç°Ò»Î»ÖÃ
-        this.speed = 300 ;//³õÊ¼ËÙ¶È
-        this.endIndex=0,           //¾ö¶¨ÔÚÄÄÒ»¸ñ±äÂı
-        this.tb = $('[data-tb]', this.$)[0];    //»ñÈ¡tb¶ÔÏó
+        this.tb = $('[data-tb]', this.$)[0];    //è·å–tbå¯¹è±¡
         var row =  $(this.tb).find('tr:eq(0)').find('td').length ;
         var col =  $(this.tb).find('tr').length ;
-        this.arr = this.getSide( col ,row); //³õÊ¼»¯Êı×é
-        this.cycle=0,           //×ª¶¯È¦Êı
-        this.endCycle=0,           //¼ÆËãÈ¦Êı
-        this.flag=false,           //½áÊø×ª¶¯±êÖ¾
-        this.quick=0;           //¼ÓËÙ
-        this.btn = $('[data-play]', this.$).off('click.MLottery').on('click.MLottery',function(){
+        this.arr = this.getSide( col ,row); //åˆå§‹åŒ–æ•°ç»„
+        this.$btn = $('[data-play]', this.$).off('click.MLottery').on('click.MLottery',function(){
             if( $(this).hasClass('btn-disabled')){
                 return ;
             }
@@ -32,9 +40,10 @@ MLottery.prototype = {
             _this.start();
         })
         return this;
-    },
-    getSide : function( m,n ){
-        //³õÊ¼»¯Êı×é
+    }
+
+    getSide( m,n ){
+        //åˆå§‹åŒ–æ•°ç»„
         var arr = [];
         for(var i=0;i<m;i++){
             arr.push([]);
@@ -42,7 +51,7 @@ MLottery.prototype = {
                 arr[i][j]=i*n+j;
             }
         }
-        //»ñÈ¡Êı×é×îÍâÈ¦
+        //è·å–æ•°ç»„æœ€å¤–åœˆ
         var resultArr=[];
         var tempX=0,
             tempY=0,
@@ -70,8 +79,8 @@ MLottery.prototype = {
             }
         }
         return resultArr;
-    },
-    start : function(){
+    }
+    start(){
         var _this = this;
         clearInterval(this.time);
         this.cycle=0;
@@ -83,12 +92,12 @@ MLottery.prototype = {
             _this._star();
         },this.speed);
         return this;
-    },
-    _star : function(){
-        //ÅÜÂíµÆ±äËÙ
+    }
+    _star(){
+        //è·‘é©¬ç¯å˜é€Ÿ
         var _this = this;
         if(this.flag==false){
-            //×ßÎå¸ñ¿ªÊ¼¼ÓËÙ
+            //èµ°äº”æ ¼å¼€å§‹åŠ é€Ÿ
             if(this.quick==5){
                 clearInterval(this.time);
                 this.speed=50;
@@ -96,11 +105,11 @@ MLottery.prototype = {
                     _this._star();
                 },this.speed);
             }
-            //ÅÜNÈ¦¼õËÙ
+            //è·‘Nåœˆå‡é€Ÿ
             if(this.cycle==this.endCycle+1 && this.index==parseInt(this.endIndex)){
                 clearInterval(this.time);
                 this.speed=300;
-                this.flag=true;       //´¥·¢½áÊø
+                this.flag=true;       //è§¦å‘ç»“æŸ
                 this.time=setInterval(function(){
                     _this._star();
                 },this.speed);
@@ -112,13 +121,13 @@ MLottery.prototype = {
             this.cycle++;
         }
 
-        //½áÊø×ª¶¯²¢Ñ¡ÖĞºÅÂë
-        //trimÀï¸Ä³ÉÊı×Ö¾Í¿ÉÒÔ¼õËÙ£¬±ä³ÉEndindexµÄ»°¾ÍÃ»ÓĞ¼õËÙĞ§¹ûÁË
+        //ç»“æŸè½¬åŠ¨å¹¶é€‰ä¸­å·ç 
+        //trimé‡Œæ”¹æˆæ•°å­—å°±å¯ä»¥å‡é€Ÿï¼Œå˜æˆEndindexçš„è¯å°±æ²¡æœ‰å‡é€Ÿæ•ˆæœäº†
         if(this.flag==true && this.index==parseInt($.trim( this.options.result ))-1){
             this.quick=0;
             clearInterval(this.time);
             this.options.callback && this.options.callback.call( this );
-            this.btn.removeClass('btn-disabled').prop('disabled', false);
+            this.$btn.removeClass('btn-disabled').prop('disabled', false);
         }
         this.tb.rows[this.arr[this.index][0]].cells[this.arr[this.index][1]].className="playcurr";
         if(this.index>0)
@@ -132,3 +141,4 @@ MLottery.prototype = {
         return this;
     }
 }
+

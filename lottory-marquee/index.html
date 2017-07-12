@@ -60,14 +60,20 @@
     </div>
 </div>
 <script src=" http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
-<script src="js/index.js"></script>
+<script src="https://cdn.bootcss.com/seajs/3.0.2/sea.js"></script>
 <script type="text/javascript">
-    new MLottery('#lottery',{
-        callback : function(){
-            console.log(this);
-        }
-    });
-    new MLottery('#lottery1');
+    seajs.config({
+        base : '/'
+    })
+    seajs.use('js/dist/index',function( Lottery ){
+        new Lottery('#lottery',{
+            callback : function(){
+                console.log(this);
+            }
+        });
+        new Lottery('#lottery1');
+
+    })
 
 </script>
 </body>
