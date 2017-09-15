@@ -1,0 +1,187 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+		"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+
+		<title>jScrollPane - cross browser styleable scrollbars with jQuery and CSS</title>
+
+		<!-- styles specific to demo site -->
+		<link type="text/css" href="style/demo.css" rel="stylesheet" media="all" />
+		<!-- styles needed by jScrollPane - include in your own sites -->
+		<link type="text/css" href="style/jquery.jscrollpane.css" rel="stylesheet" media="all" />
+
+		<!-- latest jQuery direct from google's CDN -->
+		<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+		<!-- the mousewheel plugin -->
+		<script type="text/javascript" src="script/jquery.mousewheel.js"></script>
+		<!-- the jScrollPane script -->
+		<script type="text/javascript" src="script/jquery.jscrollpane.min.js"></script>
+		<!-- scripts specific to this demo site -->
+		<script type="text/javascript" src="script/demo.js"></script>
+	</head>
+	<body>
+		<div id="top-nav">
+			<img src="image/logo.png" width="196" height="69" alt="jScrollPane">
+			<ul>
+				<li><a href="#">Home</a></li>
+				<li><a href="#examples">Examples</a></li>
+				<li><a href="#themes">Themes</a></li>
+				<li><a href="#usage">How to use</a></li>
+				<li><a href="faqs.html">FAQs</a></li>
+				<li><a href="known_issues.html">Known issues</a></li>
+				<li><a href="#support">Support</a></li>
+				
+			</ul>
+		</div>
+		<div id="container">
+			<h1>jScrollPane - cross browser styleable scrollbars with jQuery and CSS</h1>	
+
+			<h2 id="usage">How to use</h2>
+			
+			<pre>&lt;!-- styles needed by jScrollPane --&gt;
+&lt;link type="text/css" href="style/jquery.jscrollpane.css" rel="stylesheet" media="all" /&gt;
+
+&lt;!-- latest jQuery direct from google's CDN --&gt;
+&lt;script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"&gt;
+&lt;/script&gt;
+
+&lt;!-- the mousewheel plugin - optional to provide mousewheel support --&gt;
+&lt;script type="text/javascript" src="script/jquery.mousewheel.js"&gt;&lt;/script&gt;
+
+&lt;!-- the jScrollPane script --&gt;
+&lt;script type="text/javascript" src="script/jquery.jscrollpane.min.js"&gt;&lt;/script&gt;</pre>
+			<p>
+				Then you just need to initialise jScrollPane on document.ready (using a selector which will find the
+				content you want to apply jScrollPane to):
+			</p>
+			<pre>$(function()
+{
+	$('.scroll-pane').jScrollPane();
+});</pre>
+			<p>
+				There are plenty of different ways to use jScrollPane - either passing in different <a href="settings.html">
+				settings</a> when you initialise it or by using the <a href="api.html">API</a>. Each of these different
+				use cases is covered by an <a href="#examples">example</a> linked to from below.
+			</p>
+
+			
+			<p>
+				The particular files that you need are:
+			</p>
+			
+
+			<h2 id="examples">Simple examples/ tests</h2>
+			<p>
+				These examples show very basic functionality and exist so that I can test that any changes to
+				jScrollPane work cross browser and don't cause any new problems. Note that these examples aren't meant
+				to look pretty, they merely highlight different bits of functionaity which are available. If you want
+				examples of jScrollPane looking good then check out the <a href="#themes">themes</a>.
+			</p>
+			<ul class="link-list">
+				<li>
+					<a href="basic.html">Demo</a> showing basic scrolling (horizontal, vertical and combined)
+				</li>
+				<li>
+					<a href="arrows.html">Demo</a> showing basic scrolling (horizontal, vertical and combined) with
+					arrow buttons
+				</li>
+				<li>
+					<a href="focus.html">Demo</a> showing how the contents of the scrollpane is focused as you tab to it
+				</li>
+				<li>
+					<a href="caps.html">Demo</a> showing how you can set "caps" and "gutters" to change the size and
+					positioning of the scrollbar relative to the content it is scrolling
+				</li>
+				<li>
+					<a href="drag_size.html">Demo</a> showing how you can restrict the minimum and maxium size of the
+					drag part of the scrollbar
+				</li>
+				<li>
+					<a href="arrow_hover.html">Demo</a> showing how the <a href="settings.html#arrowScrollOnHover">
+					arrowScrollOnHover</a> option makes the arrow buttons automatically scroll the content when you
+					hover over them
+				</li>
+				<li>
+					<a href="arrow_positions.html">Demo</a> showing how the <a href="settings.html#verticalArrowPositions">
+					verticalArrowPositions</a> and <a href="settings.html#horizontalArrowPositions">
+					horizontalArrowPositions</a> options can change the position of the arrow buttons
+				</li>
+				<li>
+					<a href="scroll_to.html">Demo</a> showing how you can use the <a href="api.html#scrollTo">scrollTo
+					</a> and <a href="api.html#scrollBy">scrollBy</a> methods of the API
+				</li>
+				<li>
+					<a href="scroll_to_animate.html">Demo</a> showing how you can use the <a href="api.html#scrollTo">
+					scrollTo</a> and <a href="api.html#scrollBy">scrollBy</a> methods of the API along with the
+					<a href="settings.html#animateScroll">animateScroll</a> which enables animation when scrolling
+				</li>
+				<li>
+					<a href="anchors.html">Demo</a> showing how you can make internal links automatically scroll the
+					scrollpane (and how <a href="anchors.html#para4">external links</a> can link directly into content
+					within a jScrollPane)
+				</li>
+				<li>
+					<a href="invisibles.html">Demo</a> showing that jScrollPane can work correctly on elements which are
+					initially set to be invisible via CSS
+				</li>
+				<li>
+					<a href="less_basic.html">Demo</a> showing vertical scrolling with multiple panes on the same page
+					and adding dynamic content and then reinitialising one of the panes
+				</li>
+				<li>
+					<a href="dynamic_content.html">Demo</a> showing how you can manually <a href="api.html#reinitialise">
+					reinitialise</a> the scrollpane if you add dynamic content to it
+				</li>
+				<li>
+					<a href="ajax.html">Demo</a> showing how you can change the content of your jScrollPane via an ajax
+					call and can reinitialise the scrollpane once the new content has loaded
+				</li>
+				<li>
+					<a href="auto_reinitialise.html">Demo</a> showing how jScrollPane can be set to automatically
+					reinitialise itself on a timer via the <a href="settings.html#autoReinitialise">autoReinitialise</a>
+					parameter
+
+				</li>
+				<li>
+					<a href="image.html">Demo</a> showing how <a href="settings.html#autoReinitialise">autoReinitialise
+					</a> can also be used so that content with images in it displays correctly in jScrollPane
+				</li>
+				<li>
+					<a href="dynamic_width.html">Demo</a> showing how jScrollPane can be reinitialised when the width of
+					it's container changes and will update to fill the available space
+				</li>
+				<li>
+					<a href="dynamic_height.html">Demo</a> showing how jScrollPane can be reinitialised when the height
+					of it's container changes and will update to fill the available space
+				</li>
+				<li>
+					<a href="fullpage_scroll.html">Demo</a> showing how jScrollPane can be applied to an entire page
+					so that the browser's default scrollbars for the page are replaced. This demo also shows that you
+					can nest jScrollPanes and everything will still work correctly.
+				</li>
+				<li>
+					<a href="iframe.html">Demo</a> showing how jScrollPane can be used to style the scrollbars in an
+					iframe.
+				</li>
+				<li>
+					<a href="scroll_on_left.html">Demo</a> showing how vertical scrollbars can also appear on the left
+					hand side of content
+				</li>
+				<li>
+					<a href="short.html">Demo</a> showing that no scrollbars are created when the content is too short
+					to scroll
+				</li>
+				<li>
+					<a href="events.html">Demo</a> showing the events that are dispatched by an element you apply
+					jScrollPane to.
+				</li>
+				<li>
+					<a href="https://github.com/bodrovis/jscrollpane-rails/">jscrollpane-rails</a> makes integrating jScrollPane
+					with Rails apps easier.
+				</li>
+			</ul>
+
+			
+		</div>
+	</body>
+</html>
