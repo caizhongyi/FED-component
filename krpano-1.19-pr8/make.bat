@@ -1,1 +1,0 @@
-krpanotools64.exe makepano -config=templates/vtour-multires.config po.jpg
