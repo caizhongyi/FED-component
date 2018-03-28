@@ -14,7 +14,7 @@
             $prev = $(this).prev(),
             that = this;
             $target = $(target);
-            animate = animate || true;
+            animate = animate == null ?  true : animate;
 
         function animateFun ( elem1 , elem2){
             elem1.css('visibility','hidden').clone().css({
