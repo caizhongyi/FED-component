@@ -6,8 +6,11 @@
     $.fn.marquee = function(options) {
         return this.each(function() {
             // Extend the options if any provided
-            var o = $.extend({}, $.fn.marquee.defaults, options),
-                $this = $(this),
+
+            var o = $.extend({}, $.fn.marquee.defaults, options);
+
+            o,gap = 0 ;
+            var $this = $(this),
                 $marqueeWrapper, containerWidth, animationCss, verticalDir, elWidth,
                 loopCount = 3,
                 playState = 'animation-play-state',
@@ -84,6 +87,7 @@
                     }
                 };
 
+
             // Check for methods
             if (typeof options === 'string') {
                 if ($.isFunction(methods[options])) {
@@ -129,7 +133,6 @@
 
             // Shortcut to see if direction is upward or downward
             verticalDir = o.direction == 'up' || o.direction == 'down';
-
             // no gap if not duplicated
             o.gap = o.duplicated ? parseInt(o.gap) : 0;
 
@@ -161,7 +164,7 @@
                 // Change the CSS for js-marquee element
                 $this.find('.js-marquee').css({
                     'float': 'none',
-                    'margin-bottom': o.gap,
+                    'margin-bottom': 0,
                     'margin-right': 0
                 });
 
